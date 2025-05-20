@@ -6,13 +6,6 @@ body {
   margin: 0;
 }
 
-.main {
-  min-height: 100vh;
-  min-width: 100vw;
-  display: flex;
-  flex-direction: column;
-}
-
 /* TODO */
 
 /* @media (prefers-color-scheme: light) {
