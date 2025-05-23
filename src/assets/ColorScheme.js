@@ -31,7 +31,7 @@ export const ColorScheme = definePreset(Aura, {
     colorScheme: {
       light: {
         primary: {
-          color: "#f5c67c", //dourado !!!
+          color: "#f5c67c",
           inverseColor: "#ffffff",
           hoverColor: "#e6b35c",
           activeColor: "#d9a648",

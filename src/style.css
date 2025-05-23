@@ -13,6 +13,30 @@ body {
   flex-direction: column;
 }
 
+.p-inputtext:hover,
+.p-select:hover {
+  border-color: var(--p-primary-hover-color) !important;
+}
+
+.p-inputtext {
+  width: 20vw;
+  height: 7vh;
+}
+
+.p-button {
+  min-width: 10vw;
+}
+
+.p-dialog-header {
+  padding: 1rem 0 0 2rem !important;
+}
+
+.p-dialog-content > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 /* TODO */
 
 /* @media (prefers-color-scheme: light) {

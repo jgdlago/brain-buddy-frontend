@@ -1,39 +1,61 @@
 <script setup>
   import { ref } from 'vue';
-  import { login } from '../services/LoginService';
+  import { login, recover } from '../services/AuthService';
   import { useRouter } from 'vue-router';
+  import Input from './Input.vue';
 
-  const email = ref('');
-  const senha = ref('');
+  const object = ref({
+    email: '',
+    senha: ''  
+  })
   const router = useRouter();
   
   const handleLogin = async () => {
     try {
-      const data = await login(email.value, senha.value);
+      const data = await login(object.value);
       router.push('/players');
     } catch (error) {
       // TODO implementar alerta decente
       alert('Erro no login: ' + error.message);
     }
   } 
+
+  const emailRecover = ref('');
+
+  const handleRecover = async () => {
+    try {
+      const data = await recover(emailRecover.value);
+    } catch (error) {
+      // TODO implementar alerta decente
+      alert('Erro no login: ' + error.message);
+    }
+  }
+
+  const handleCadastro = () => {
+    router.push('/cadastro');
+  }
+
+  const modalVisible = ref(false);
+
 </script>
 
 <template>
   <div class="login">
     <h1 class="title">Dashboards</h1>
-    <IftaLabel>
-      <InputText v-model="email" id="email" size="large" />
-      <label for="email">E-mail</label>
-    </IftaLabel>
 
-    <IftaLabel>
-      <Password v-model="senha" id="senha" size="large" :feedback="false"/>
-      <label for="senha">Senha</label>
-    </IftaLabel>
+    <Input v-model="object.email" label="E-mail" id="email" type="text" />
+    <Input v-model="object.senha" label="Senha" id="senha" type="password" showForgot v-model:forgotRef="modalVisible"/>
 
     <Button label="Entrar" @click="handleLogin"/>
-    <Button variant="link" label="Esqueci minha senha" size="small"/>
+    <Button variant="link" label="Crie uma conta" size="small" @click="handleCadastro"/>
   </div>
+  <Dialog v-model:visible="modalVisible" modal header="Recuperar senha">
+    <div>
+      <p>Insira um email para receber as instruções para recuperar o acesso a sua conta.</p>
+      <Input v-model="emailRecover" label="E-mail" id="emailRecover" type="text"/>
+      <Button label="Recuperar" @click="handleRecover"/>
+    </div>
+  </Dialog>
 </template>
 
 <style scoped>
