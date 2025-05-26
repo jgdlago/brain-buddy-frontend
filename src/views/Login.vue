@@ -2,7 +2,8 @@
   import { ref } from 'vue';
   import { login, recover } from '../services/AuthService';
   import { useRouter } from 'vue-router';
-  import Input from './Input.vue';
+  import Input from '../components/Input.vue';
+import { Button, Dialog } from 'primevue';
 
   const object = ref({
     email: '',
@@ -31,8 +32,8 @@
     }
   }
 
-  const handleCadastro = () => {
-    router.push('/cadastro');
+  const handleRegister = () => {
+    router.push('/register');
   }
 
   const modalVisible = ref(false);
@@ -47,7 +48,7 @@
     <Input v-model="object.senha" label="Senha" id="senha" type="password" showForgot v-model:forgotRef="modalVisible"/>
 
     <Button label="Entrar" @click="handleLogin"/>
-    <Button variant="link" label="Crie uma conta" size="small" @click="handleCadastro"/>
+    <Button variant="link" label="Crie uma conta" size="small" @click="handleRegister"/>
   </div>
   <Dialog v-model:visible="modalVisible" modal header="Recuperar senha">
     <div>

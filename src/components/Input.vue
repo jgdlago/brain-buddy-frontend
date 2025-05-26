@@ -1,10 +1,9 @@
 <script setup>
-import { computed, ref, useTemplateRef } from 'vue';
+import { computed } from 'vue';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import FloatLabel from 'primevue/floatlabel';
-import Button from 'primevue/button';
-import { useRouter } from 'vue-router';
+import { Button } from 'primevue';
 
 const props = defineProps({
   modelValue: String,

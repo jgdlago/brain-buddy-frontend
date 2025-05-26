@@ -23,14 +23,6 @@ body {
   height: 7vh;
 }
 
-.p-button {
-  min-width: 10vw;
-}
-
-.p-dialog-header {
-  padding: 1rem 0 0 2rem !important;
-}
-
 .p-dialog-content > div {
   display: flex;
   flex-direction: column;
