@@ -2,7 +2,8 @@
   import { ref } from 'vue';
   import { register } from '../services/AuthService';
   import { useRouter } from 'vue-router';
-  import Input from './Input.vue';
+  import Input from '../components/Input.vue';
+import { Button } from 'primevue';
 
   const object = ref({
     nome: '',

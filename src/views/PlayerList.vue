@@ -1,14 +1,17 @@
 <script setup>
     import { ref } from 'vue';
-    import Toolbar from './Toolbar.vue';
+    import Toolbar from '../components/Toolbar.vue';
+    import { Column, DataTable, Select } from 'primevue';
 
-    const players = [{id: 1, nome: 'Maria Aparecida'}, {id: 2, nome: 'João Sumido'}];
+    // const players = [{id: 1, nome: 'Maria Aparecida'}, {id: 2, nome: 'João Sumido'}];
+    const players = ref([]);
     const turmas = [{key: 1, nome: 'Turma 1'}, {key: 2, nome: 'Turma 2'}];
     const expandedRows = ref(null);
+
+    // players = 
 </script>
 
 <template>
-    <Toolbar/>
     <div class="container">
         <div class="controls">
             <Select class="select" :options="turmas" optionLabel="nome" placeholder="Selecione"/>
