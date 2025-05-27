@@ -1,32 +1,49 @@
 <script setup>
-    import { ref } from 'vue';
+    import { onMounted, ref } from 'vue';
     import { Column, DataTable, Select } from 'primevue';
     import { getPlayers } from '../services/PlayerService';
     import { getGroups } from '../services/GroupService';
+    import { useUserStore } from '../stores/userStore';
+import { formatDateTime } from '../utils';
 
-    // const players = ref([]);
-    // const turmas = ref([]);
+    const players = ref([]);
+    const turmas = ref([]);
     const expandedRows = ref(null);
+    const userStore = useUserStore();
+    const selectedGroup = ref(null);
 
-    const players = [{id: 1, nome: 'Maria Aparecida'}, {id: 2, nome: 'João Sumido'}];
-    const turmas = [{key: 1, nome: 'Turma 1'}, {key: 2, nome: 'Turma 2'}];
+    onMounted(async () => {
+        if (userStore.id) {
+            turmas.value = await getGroups(userStore.id);
+            if (turmas.value.length > 0) {
+                selectedGroup.value = turmas.value[0];
+                await handleGetPlayers(selectedGroup);
+            }
+        }
+    });
 
-    // players = getPlayers(groupId);
-    // turmas = getGroups(userId);
+    const handleGetPlayers = async (row) => {
+        players.value = await getPlayers(row.value.key);
+    }
 </script>
 
 <template>
     <div class="container">
         <div class="box">
-            <Select class="select" :options="turmas" optionLabel="nome" placeholder="Selecione"/>
+            <Select :options="turmas" v-model="selectedGroup" key="key" optionLabel="label" placeholder="Selecione" @change="(row) => handleGetPlayers(row)"/>
             <DataTable v-model:expandedRows="expandedRows" :value="players" class="size-full" showGridlines>
                 <Column expander style="width: 5%;"/>
-                <Column field="id" header="Código"/>
-                <Column field="nome" header="Nome"/>
+                <Column field="name" header="Nome"/>
+                <Column field="age" header="Idade"/>
                 <template #expansion="slotProps">
                     <div class="p-4 bg-gray-100 rounded">
-                        <strong>Detalhes:</strong> {{ slotProps.data.nome }}
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <strong>Detalhes</strong>
+                        <p>Nome: {{ slotProps.data.name }}</p>
+                        <p>Idade: {{ slotProps.data.age }}</p>
+                        <p>Gênero: {{ slotProps.data.gender }}</p>
+                        <p>Personagem: {{ slotProps.data.character }}</p>
+                        <p>Criado em: {{ formatDateTime(slotProps.data.created_at) }}</p>
+                        <p>Último progresso salvo: {{ formatDateTime(slotProps.data.updated_at) }}</p>
                     </div>
                 </template>
             </DataTable>

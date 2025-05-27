@@ -1,5 +1,5 @@
-import Axios from "../axios/axios";
-import { useTokenStore } from "../stores/token";
+import Axios from "../axios/api";
+import { useUserStore } from "../stores/userStore";
 
 export const login = async ({ email, senha }) => {
   if (email == "admin" && senha == "admin") {
@@ -12,8 +12,12 @@ export const login = async ({ email, senha }) => {
     password: senha,
   });
 
-  const tokenStore = useTokenStore();
-  tokenStore.set(response.data.token);
+  const userStore = useUserStore();
+  userStore.setUser(
+    response.data.token,
+    response.data.user.id,
+    response.data.user.name
+  );
 
   return response.data;
 };
@@ -26,8 +30,12 @@ export const register = async ({ nome, email, senha, senhaConf }) => {
     password_confirmation: senhaConf,
   });
 
-  const tokenStore = useTokenStore();
-  tokenStore.set(response.data.token);
+  const userStore = useUserStore();
+  userStore.setUser(
+    response.data.token,
+    response.data.user.id,
+    response.data.user.name
+  );
 
   return response.data;
 };
