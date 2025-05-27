@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
-import PlayerList from "./views/PlayerList.vue";
+import Player from "./views/Player.vue";
 import AppLayout from "./layouts/AppLayout.vue";
 import AuthLayout from "./layouts/AuthLayout.vue";
+import ActivityArea from "./views/ActivityArea.vue";
+import Institutions from "./views/Institutions.vue";
 
 // component: () => import("@/components/Login.vue")
 
@@ -13,8 +15,9 @@ const routes = [
     path: "/app",
     component: AppLayout,
     children: [
-      { path: "/players", component: PlayerList },
-      // { path: "/form", component: Form },
+      { path: "/player", component: Player },
+      { path: "/activity-area", component: ActivityArea },
+      { path: "/institutions", component: Institutions },
     ],
   },
   {

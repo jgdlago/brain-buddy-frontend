@@ -1,6 +1,6 @@
 <script setup>
-    import { Drawer } from 'primevue';
-import { ref } from 'vue';
+    import { Button, Drawer } from 'primevue';
+    import router from '../router';
 
     const props = defineProps({
         visible: {
@@ -14,9 +14,17 @@ import { ref } from 'vue';
 </script>
 
     <template>
-        <Drawer :visible="visible" header="" position="left" dismissable @update:visible="() => {emit('update:visible', false)}">
+        <Drawer :visible="visible" header="Menu" position="left" dismissable @update:visible="() => {emit('update:visible', false)}">
+            <div class="flex flex-col items-start">
+                <Button link label="Player" @click="router.push('/player')"/>
+                <Button link label="Áreas de atividade" @click="router.push('/activity-area')"/>
+                <Button link label="Instituições" @click="router.push('/institutions')"/>
+            </div>
         </Drawer>
     </template>
 
     <style scoped>
+        Button {
+            color: var(--p-primary-900);
+        }
     </style> 
