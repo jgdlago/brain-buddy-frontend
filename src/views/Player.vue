@@ -4,7 +4,7 @@
     import { getPlayers } from '../services/PlayerService';
     import { getGroups } from '../services/GroupService';
     import { useUserStore } from '../stores/userStore';
-import { formatDateTime } from '../utils';
+    import { formatDateTime } from '../utils';
 
     const players = ref([]);
     const turmas = ref([]);
@@ -23,14 +23,14 @@ import { formatDateTime } from '../utils';
     });
 
     const handleGetPlayers = async (row) => {
-        players.value = await getPlayers(row.value.key);
+        players.value = await getPlayers(row.value.id);
     }
 </script>
 
 <template>
     <div class="container">
         <div class="box">
-            <Select :options="turmas" v-model="selectedGroup" key="key" optionLabel="label" placeholder="Selecione" @change="(row) => handleGetPlayers(row)"/>
+            <Select :options="turmas" v-model="selectedGroup" key="id" optionLabel="name" placeholder="Selecione" @change="(row) => handleGetPlayers(row)"/>
             <DataTable v-model:expandedRows="expandedRows" :value="players" class="size-full" showGridlines>
                 <Column expander style="width: 5%;"/>
                 <Column field="name" header="Nome"/>

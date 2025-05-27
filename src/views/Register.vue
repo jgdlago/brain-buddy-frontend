@@ -17,7 +17,7 @@ import { Button } from 'primevue';
   const handleCadastrar = async () => {
     try {
       const data = await register(object.value);
-      router.push('/players');
+      router.push('/player');
     } catch (error) {
       // TODO implementar alerta decente
       alert('Erro no login: ' + error.message);
