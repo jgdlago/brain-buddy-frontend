@@ -1,14 +1,11 @@
 <script setup>
     import Form from '../components/Form.vue';
-    import { ref } from 'vue';
+    import { onMounted, ref } from 'vue';
     import Input from '../components/Input.vue';
     import { Button } from 'primevue';
+    import { addActivityArea, deleteActivityArea, getActivityArea, updateActivityArea } from '../services/ActivityAreaService';
 
-    const modalVisible = ref(false);
-
-    const handleAddActicityArea = () => {
-        //addActicityArea service etc
-    }
+    const data = ref(null);
 
     const columns = [
         {
@@ -21,28 +18,25 @@
         },
     ]
 
-    const data = [
-        {
-            name: 'área de atividade',
-            description: 'exemplo'
-        },
-    ]
-
     const object = {
         name: '',
         description: ''
     }
 
+    onMounted(async () => {
+        data.value = await getActivityArea();
+    });
+
     const submitForm = (form, edit) => {
         if (edit) {
-            //edit service
+            updateActivityArea(form);
         } else {
-            //add service
+            addActivityArea(form);
         }
     }
 
     const handleDelete = (row) => {
-        console.log(row);
+        deleteActivityArea(row.id);
     }
 
 </script>
