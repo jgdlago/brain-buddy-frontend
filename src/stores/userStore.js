@@ -10,4 +10,9 @@ export const useUserStore = defineStore("user", {
       this.name = name;
     },
   },
+
+  persist: {
+    storage: sessionStorage,
+    //TODO analisar melhor maneira de criptografar/proteger
+  },
 });
