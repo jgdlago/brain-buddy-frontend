@@ -3,16 +3,18 @@ import { ref } from 'vue';
 import NotificationDrawer from './NotificationDrawer.vue';
 import Sidebar from './Sidebar.vue';
 import { Toolbar } from 'primevue';
+import { useUserStore } from '../stores/userStore';
 const notificationDrawerVisible = ref(false);
 const sidebarVisible = ref(false);
 
+const userStore = useUserStore();
 </script>
 
 <template>
     <Toolbar> 
         <template #start>
             <i class="pi pi-user" style="margin-right: 1rem;" @click="sidebarVisible = true"/>
-            Olá, user 
+            Olá, {{userStore.name}} 
             <!-- todo -->
         </template>
         <template #end>

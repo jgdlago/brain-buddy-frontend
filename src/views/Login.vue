@@ -3,7 +3,7 @@
   import { login, recover } from '../services/AuthService';
   import { useRouter } from 'vue-router';
   import Input from '../components/Input.vue';
-import { Button, Dialog } from 'primevue';
+  import { Button, Dialog } from 'primevue';
 
   const object = ref({
     email: '',
@@ -14,7 +14,7 @@ import { Button, Dialog } from 'primevue';
   const handleLogin = async () => {
     try {
       const data = await login(object.value);
-      router.push('/players');
+      router.push('/player');
     } catch (error) {
       // TODO implementar alerta decente
       alert('Erro no login: ' + error.message);
@@ -41,8 +41,8 @@ import { Button, Dialog } from 'primevue';
 </script>
 
 <template>
-  <div class="login">
-    <h1 class="title">Dashboards</h1>
+  <div class="container">
+    <h1>Dashboards</h1>
 
     <Input v-model="object.email" label="E-mail" id="email" type="text" />
     <Input v-model="object.senha" label="Senha" id="senha" type="password" showForgot v-model:forgotRef="modalVisible"/>
@@ -60,21 +60,4 @@ import { Button, Dialog } from 'primevue';
 </template>
 
 <style scoped>
-  .title {
-    position: absolute;
-    visibility: visible;
-    top: 5rem;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    color: var(--p-primary-900);
-  }
-  .login {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    gap: 0.5rem;
-    justify-content: center;
-    align-items: center;
-  }
 </style>

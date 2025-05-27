@@ -55,6 +55,18 @@ body {
   flex: 1;
 }
 
+h1 {
+  position: absolute;
+  visibility: visible;
+  top: 5rem;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: var(--p-primary-900);
+  font-size: 2rem;
+  font-weight: bold;
+}
+
 /* TODO */
 
 /* @media (prefers-color-scheme: light) {

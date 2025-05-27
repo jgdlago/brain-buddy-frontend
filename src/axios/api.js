@@ -1,16 +1,16 @@
 import axios from "axios";
-import { useTokenStore } from "../stores/token";
+import { useUserStore } from "../stores/userStore";
 
 const Axios = axios.create({
-  baseURL: "http://192.168.1.115/api/", //todo
+  baseURL: "http://192.168.1.115/api/", //TODO
   headers: {
     "Content-Type": "application/json",
   },
 });
 
 Axios.interceptors.request.use((config) => {
-  const tokenStore = useTokenStore();
-  const token = tokenStore.token;
+  const userStore = useUserStore();
+  const token = userStore.token;
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
