@@ -1,6 +1,4 @@
-export const getPlayers = async () => {
-  // const response = await Axios.post("/auth/forgot-password", {
-  //   email: email,
-  // });
-  // return response.data;
+export const getPlayers = async (groupId) => {
+  const response = await Axios.post(`/list/player?group=${groupId}`);
+  return response.data;
 };
