@@ -1,14 +1,11 @@
 <script setup>
     import Form from '../components/Form.vue';
-    import { ref } from 'vue';
+    import { onMounted, ref } from 'vue';
     import Input from '../components/Input.vue';
     import { Button } from 'primevue';
+    import { addInstitution, deleteInstitution, getInstitutions, updateInstitution } from '../services/InstitutionService';
 
-    const modalVisible = ref(false);
-
-    const handleAddInstitution = () => {
-        // service etc
-    }
+    const data = ref(null);
 
     const columns = [
         {
@@ -29,15 +26,6 @@
         },
     ]
 
-    const data = [
-        {
-            name: 'instituição',
-            cnpj: '12345678901234',
-            activity_area_id: 1,
-            owner_user_id: 2
-        },
-    ]
-
     const object = {
         name: '',
         cnpj: '',
@@ -45,16 +33,20 @@
         owner_user_id: null
     }
 
+    onMounted(async () => {
+        data.value = await getInstitutions();
+    });
+
     const submitForm = (form, edit) => {
         if (edit) {
-            //edit service
+            updateInstitution(form);
         } else {
-            //add service
+            addInstitution(form);
         }
     }
 
     const handleDelete = (row) => {
-        console.log(row);
+        deleteInstitution(row.id);
     }
 
 </script>
