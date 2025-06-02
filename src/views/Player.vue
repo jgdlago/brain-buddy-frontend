@@ -31,7 +31,7 @@
     <div class="container">
         <div class="box">
             <Select :options="turmas" v-model="selectedGroup" key="id" optionLabel="name" placeholder="Selecione" @change="(row) => handleGetPlayers(row)"/>
-            <DataTable v-model:expandedRows="expandedRows" :value="players" class="size-full" showGridlines>
+                <DataTable v-model:expandedRows="expandedRows" :value="players" class="size-full" showGridlines>
                 <Column expander style="width: 5%;"/>
                 <Column field="name" header="Nome"/>
                 <Column field="age" header="Idade"/>

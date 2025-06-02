@@ -22,15 +22,11 @@ body {
   border-color: var(--p-primary-hover-color) !important;
 }
 
-.p-inputtext {
+.p-inputtext,
+.p-textarea {
   width: 20vw;
   height: 7vh;
-}
-
-.p-dialog-content > div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  font-size: 1rem !important;
 }
 
 .container {
@@ -65,6 +61,16 @@ h1 {
   color: var(--p-primary-900);
   font-size: 2rem;
   font-weight: bold;
+}
+
+.p-select-label {
+  /* deixar igual o resto */
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 /* TODO */

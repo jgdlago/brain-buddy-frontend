@@ -2,8 +2,9 @@
   import { ref } from 'vue';
   import { register } from '../services/AuthService';
   import { useRouter } from 'vue-router';
-  import Input from '../components/Input.vue';
 import { Button } from 'primevue';
+import Text from '../components/Input/Text.vue';
+import Password from '../components/Input/Password.vue';
 
   const object = ref({
     nome: '',
@@ -36,10 +37,10 @@ import { Button } from 'primevue';
 
     <!-- TODO feedback na senha aqui -->
      <!-- TODO precognition https://laravel.com/docs/11.x/precognition#main-content -->
-    <Input v-model="object.nome" label="Nome" id="nome" type="text" />
-    <Input v-model="object.email" label="E-mail" id="email" type="text" />
-    <Input v-model="object.senha" label="Senha" id="senha" type="password"/>
-    <Input v-model="object.senhaConf" label="Confirme a senha" id="senhaConf" type="password"/>
+    <Text v-model="object.nome" label="Nome" id="nome" type="text" />
+    <Text v-model="object.email" label="E-mail" id="email" type="text" />
+    <Password v-model="object.senha" label="Senha" id="senha" type="password"/>
+    <Password v-model="object.senhaConf" label="Confirme a senha" id="senhaConf" type="password"/>
 
     <Button label="Cadastrar" @click="handleCadastrar"/>
     <Button variant="link" label="Já tenho uma conta" size="small" @click="handleEntrar"/>

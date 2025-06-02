@@ -1,9 +1,10 @@
 <script setup>
     import Form from '../components/Form.vue';
     import { onMounted, ref } from 'vue';
-    import Input from '../components/Input.vue';
     import { Button } from 'primevue';
     import { addActivityArea, deleteActivityArea, getActivityArea, updateActivityArea } from '../services/ActivityAreaService';
+    import Text from '../components/Input/Text.vue';
+    import Textarea from '../components/Input/Textarea.vue';
 
     const data = ref(null);
 
@@ -45,8 +46,8 @@
     <Form :columns="columns" :data="data" :object="object" :handleDelete="handleDelete">
         <template #addContent="{ form, edit}">
             <form  @submit.prevent="submitForm(form, edit)">
-                <Input label="Nome" v-model="form.name"/>
-                <Input label="Descrição" v-model="form.description"/>
+                <Text label="Nome" v-model="form.name"/>
+                <Textarea label="Descrição" v-model="form.description" type="textArea"/>
                 <Button label="Cadastrar" type="submit"/>
             </form>
         </template>

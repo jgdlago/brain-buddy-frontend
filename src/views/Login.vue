@@ -2,8 +2,9 @@
   import { ref } from 'vue';
   import { login, recover } from '../services/AuthService';
   import { useRouter } from 'vue-router';
-  import Input from '../components/Input.vue';
   import { Button, Dialog } from 'primevue';
+import Text from '../components/Input/Text.vue';
+import Password from '../components/Input/Password.vue';
 
   const object = ref({
     email: '',
@@ -44,8 +45,8 @@
   <div class="container">
     <h1>Dashboards</h1>
 
-    <Input v-model="object.email" label="E-mail" id="email" type="text" />
-    <Input v-model="object.senha" label="Senha" id="senha" type="password" showForgot v-model:forgotRef="modalVisible"/>
+    <Text v-model="object.email" label="E-mail" id="email" type="text" />
+    <Password v-model="object.senha" label="Senha" id="senha" type="password" showForgot v-model:forgotRef="modalVisible"/>
 
     <Button label="Entrar" @click="handleLogin"/>
     <Button variant="link" label="Crie uma conta" size="small" @click="handleRegister"/>
@@ -53,7 +54,7 @@
   <Dialog v-model:visible="modalVisible" modal header="Recuperar senha">
     <div>
       <p>Insira um email para receber as instruções para recuperar o acesso a sua conta.</p>
-      <Input v-model="emailRecover" label="E-mail" id="emailRecover" type="text"/>
+      <Text v-model="emailRecover" label="E-mail" id="emailRecover" type="text"/>
       <Button label="Recuperar" @click="handleRecover"/>
     </div>
   </Dialog>

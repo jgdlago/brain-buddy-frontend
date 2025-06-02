@@ -76,7 +76,7 @@
             </DataTable>
         </div>
     </div>
-    <Dialog :header="edit ? 'Editar' : 'Inserir'" v-model:visible="modalVisible" dismissable modal>
+    <Dialog :header="edit ? 'Editar' : 'Inserir'" v-model:visible="modalVisible" modal dismissableMask>
         <slot name="addContent" :form="obj" :edit="edit"/>
     </Dialog>
 </template>

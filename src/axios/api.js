@@ -2,7 +2,8 @@ import axios from "axios";
 import { useUserStore } from "../stores/userStore";
 
 const Axios = axios.create({
-  baseURL: "http://192.168.1.115/api/", //TODO
+  // baseURL: "http://192.168.1.115/api/",
+  baseURL: "http://localhost/api/",
   headers: {
     "Content-Type": "application/json",
   },
