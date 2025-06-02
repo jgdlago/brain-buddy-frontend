@@ -1,9 +1,12 @@
 <script setup>
     import Form from '../components/Form.vue';
     import { onMounted, ref } from 'vue';
-    import Input from '../components/Input.vue';
     import { Button } from 'primevue';
     import { addInstitution, deleteInstitution, getInstitutions, updateInstitution } from '../services/InstitutionService';
+import Text from '../components/Input/Text.vue';
+import TextMask from '../components/Input/TextMask.vue';
+import Dropdown from '../components/Dropdown.vue';
+import { getActivityArea } from '../services/ActivityAreaService';
 
     const data = ref(null);
 
@@ -55,10 +58,10 @@
     <Form :columns="columns" :data="data" :object="object" :handleDelete="handleDelete">
         <template #addContent="{ form, edit}">
             <form  @submit.prevent="submitForm(form, edit)">
-                <Input label="Nome" v-model="form.name"/>
-                <Input label="CNPJ" v-model="form.cnpj"/>
-                <Input label="Área de atividade" v-model="form.activity_area_id"/>
-                <Input label="Usuário responsável" v-model="form.owner_user_id"/>
+                <Text label="Nome" v-model="form.name"/>
+                <TextMask label="CNPJ" v-model="form.cnpj" mask="cnpj"/>
+                <Dropdown v-model="form.activity_area_id" :getData='getActivityArea' placeholder="Área de atividade"/>
+                <Text label="Usuário responsável" v-model="form.owner_user_id"/>
                 <Button label="Cadastrar" type="submit"/>
             </form>
         </template>
