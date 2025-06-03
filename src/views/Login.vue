@@ -43,13 +43,15 @@ import Password from '../components/Input/Password.vue';
 
 <template>
   <div class="container">
-    <h1>Dashboards</h1>
+    <h1 class="text-2xl font-bold">Painel Brain Buddy</h1>
 
-    <Text v-model="object.email" label="E-mail" id="email" type="text" />
-    <Password v-model="object.senha" label="Senha" id="senha" type="password" showForgot v-model:forgotRef="modalVisible"/>
+    <form @submit.prevent="handleLogin">
+      <Text v-model="object.email" label="E-mail" id="email" type="text" />
+      <Password v-model="object.senha" label="Senha" id="senha" type="password" showForgot v-model:forgotRef="modalVisible"/>
 
-    <Button label="Entrar" @click="handleLogin"/>
-    <Button variant="link" label="Crie uma conta" size="small" @click="handleRegister"/>
+      <Button label="Entrar" @click="handleLogin" type="submit"/>
+      <Button variant="link" label="Crie uma conta" size="small" @click="handleRegister"/>
+    </form>
   </div>
   <Dialog v-model:visible="modalVisible" modal header="Recuperar senha">
     <div>

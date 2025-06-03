@@ -13,7 +13,7 @@ const userStore = useUserStore();
 <template>
     <Toolbar> 
         <template #start>
-            <i class="pi pi-user" style="margin-right: 1rem;" @click="sidebarVisible = true"/>
+            <i class="pi pi-bars" style="margin-right: 1rem;" @click="sidebarVisible = true"/>
             Olá, {{userStore.name}} 
             <!-- todo -->
         </template>
