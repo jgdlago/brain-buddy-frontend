@@ -57,16 +57,21 @@ h1 {
 }
 
 .p-inputwrapper {
-  margin: 0.3rem 0;
+  /* margin: 0.3rem 0; */
   width: 20vw;
-  height: 7vh;
+  min-height: 7vh;
   font-size: 1rem !important;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
+  margin-top: 0.2rem;
+}
+
+i:hover {
+  cursor: pointer;
 }
 
 /* TODO */
