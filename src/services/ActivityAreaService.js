@@ -19,3 +19,8 @@ export const deleteActivityArea = async (id) => {
   const response = await Axios.delete(`/activity-area/${id}`);
   return response.data.data;
 };
+
+export const listActivityArea = async () => {
+  const response = await Axios.get(`/list/activity-area`);
+  return response.data;
+};

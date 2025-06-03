@@ -3,10 +3,11 @@
     import { onMounted, ref } from 'vue';
     import { Button } from 'primevue';
     import { addInstitution, deleteInstitution, getInstitutions, updateInstitution } from '../services/InstitutionService';
-import Text from '../components/Input/Text.vue';
-import TextMask from '../components/Input/TextMask.vue';
-import Dropdown from '../components/Dropdown.vue';
-import { getActivityArea } from '../services/ActivityAreaService';
+    import Text from '../components/Input/Text.vue';
+    import TextMask from '../components/Input/TextMask.vue';
+    import Dropdown from '../components/Dropdown.vue';
+    import { listActivityArea } from '../services/ActivityAreaService';
+    import { listUsers } from '../services/UserService';
 
     const data = ref(null);
 
@@ -60,8 +61,8 @@ import { getActivityArea } from '../services/ActivityAreaService';
             <form  @submit.prevent="submitForm(form, edit)">
                 <Text label="Nome" v-model="form.name"/>
                 <TextMask label="CNPJ" v-model="form.cnpj" mask="cnpj"/>
-                <Dropdown v-model="form.activity_area_id" :getData='getActivityArea' placeholder="Área de atividade"/>
-                <Text label="Usuário responsável" v-model="form.owner_user_id"/>
+                <Dropdown v-model="form.activity_area" :getData='listActivityArea' placeholder="Área de atividade"/>
+                <Dropdown v-model="form.owner_user" :getData='listUsers' placeholder="Usuário responsável"/>
                 <Button label="Cadastrar" type="submit"/>
             </form>
         </template>
