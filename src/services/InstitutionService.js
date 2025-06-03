@@ -6,7 +6,12 @@ export const getInstitutions = async () => {
 };
 
 export const addInstitution = async (body) => {
-  const response = await Axios.post(`/institution`, body);
+  const response = await Axios.post(`/institution`, {
+    name: body.name,
+    cnpj: body.cnpj,
+    activity_area_id: body.activity_area.id,
+    owner_user_id: body.owner_user.id,
+  });
   return response.data.data;
 };
 

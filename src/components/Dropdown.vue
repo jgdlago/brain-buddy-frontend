@@ -5,7 +5,7 @@ import { computed, onMounted, ref } from 'vue';
 const props = defineProps({
     placeholder: String,
     getData: Function,
-    modelValue: Object
+    modelValue: Number
 });
 
 const data = ref([]);
@@ -16,19 +16,15 @@ onMounted(async () => {
 
 const emit = defineEmits(['update:modelValue']);
 
-const selectedValue = computed({
-  get: () => {
-    return data.value.find(item => item.id === props.modelValue); //TODO tá demorando e tá feio
-  },
-  set: (val) => {
-    emit('update:modelValue', val.id);
-  }
+const model = computed({
+  get: () => props.modelValue,
+  set: val => emit('update:modelValue', val)
 });
 
 </script>
 
 <template>
-    <Select v-model="selectedValue" :options="data" key="id" optionLabel="name" :placeholder="placeholder" emptyMessage="Nenhum item encontrado"/>
+    <Select v-model="model" :options="data" optionLabel="label" optionValue="key" :placeholder="placeholder" emptyMessage="Nenhum item encontrado"/>
 </template>
 
 <style scoped>

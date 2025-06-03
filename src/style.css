@@ -22,13 +22,6 @@ body {
   border-color: var(--p-primary-hover-color) !important;
 }
 
-.p-inputtext,
-.p-textarea {
-  width: 20vw;
-  height: 7vh;
-  font-size: 1rem !important;
-}
-
 .container {
   display: flex;
   min-width: 100%;
@@ -63,8 +56,11 @@ h1 {
   font-weight: bold;
 }
 
-.p-select-label {
-  /* deixar igual o resto */
+.p-inputwrapper {
+  margin: 0.3rem 0;
+  width: 20vw;
+  height: 7vh;
+  font-size: 1rem !important;
 }
 
 form {

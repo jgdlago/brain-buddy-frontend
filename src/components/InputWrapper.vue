@@ -19,7 +19,7 @@
 </script>
 
 <template>
-  <div class="my-[0.5rem]">
+  <div class="p-inputwrapper">
     <FloatLabel variant="on">
       <slot />
       <label :for="id">{{ label }}</label>
