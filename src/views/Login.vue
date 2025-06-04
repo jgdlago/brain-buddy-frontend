@@ -43,7 +43,7 @@ import Password from '../components/Input/Password.vue';
 
 <template>
   <div class="container">
-    <h1 class="text-2xl font-bold">Painel Brain Buddy</h1>
+    <h1>Painel Brain Buddy</h1>
 
     <form @submit.prevent="handleLogin">
       <Text v-model="object.email" label="E-mail" id="email" type="text" />
