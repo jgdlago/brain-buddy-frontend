@@ -1,5 +1,4 @@
 <script setup>
-    import { handle } from '@primeuix/themes/aura/imagecompare';
     import { Button, Column, DataTable, Dialog, IconField, InputIcon, InputText, Popover } from 'primevue';
     import { ref } from 'vue';
 
@@ -23,13 +22,8 @@
     });
 
     const modalVisible = ref(false);
-    const popoverVisible = ref();
     const edit = ref(false);
     const obj = ref({ ...props.object.value });
-
-    const togglePopover = (event) => {
-        popoverVisible.value.toggle(event);
-    }
 
     const handleAdd = () => {
         obj.value = { ...props.object.value };
@@ -60,13 +54,10 @@
                 </Column>
                 <Column>
                     <template #body="{ data: row }">
-                        <Button icon="pi pi-ellipsis-v" link @click="togglePopover"/>
-                        <Popover ref="popoverVisible">
-                            <div class="flex gap-1">
-                                <Button icon="pi pi-pencil" @click="() => handleEdit(row)"/>
-                                <Button icon="pi pi-trash" severity="danger" @click="() => props.handleDelete(row)"/>
-                            </div>
-                        </Popover>
+                        <div class="flex gap-[0.5rem]">
+                            <Button icon="pi pi-pencil" link @click="() => handleEdit(row)"/>
+                            <Button icon="pi pi-trash" link style="color: var(--p-primary-danger)" @click="() => props.handleDelete(row)"/>
+                        </div>
                     </template>
                 </Column>
             </DataTable>
