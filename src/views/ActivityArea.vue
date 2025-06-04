@@ -48,7 +48,7 @@
             <form  @submit.prevent="submitForm(form, edit)">
                 <Text label="Nome" v-model="form.name"/>
                 <Textarea label="Descrição" v-model="form.description" type="textArea"/>
-                <Button label="Cadastrar" type="submit"/>
+                <Button :label="edit ? 'Editar' : 'Cadastrar'" type="submit"/>
             </form>
         </template>
     </Form>

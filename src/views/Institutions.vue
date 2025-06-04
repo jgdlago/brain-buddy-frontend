@@ -1,7 +1,7 @@
 <script setup>
     import Form from '../components/Form.vue';
     import { onMounted, ref } from 'vue';
-    import { Button } from 'primevue';
+    import { Button, Select } from 'primevue';
     import { addInstitution, deleteInstitution, getInstitutions, updateInstitution } from '../services/InstitutionService';
     import Text from '../components/Input/Text.vue';
     import TextMask from '../components/Input/TextMask.vue';
@@ -22,19 +22,19 @@
         },
         {
             header: 'Área de atividade',
-            field: 'activity_area_id',
+            field: 'activity_area.name',
         },
         {
             header: 'Usuário responsável',
-            field: 'owner_user_id',
+            field: 'owner_user.name',
         },
     ]
 
     const object = {
         name: '',
         cnpj: '',
-        activity_area_id: null,
-        owner_user_id: null
+        activity_area: null,
+        owner_user: null
     }
 
     onMounted(async () => {
