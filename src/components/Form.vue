@@ -53,7 +53,7 @@
     <div class="container">
         <div class="box">
             <Button label="Adicionar" class="button" @click="handleAdd"/>
-            <DataTable class="size-full" scrollable scrollHeight="100vh" :value="props.data" showGridlines strippedRows paginator :rows="10" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" 
+            <DataTable class="size-full" scrollable scrollHeight="100vh" :value="props.data" showGridlines strippedRows paginator :rows="15" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" 
             currentPageReportTemplate="{first} até {last} de {totalRecords}" removableSort>
                 <template #empty> Nenhum dado encontrado. </template> 
                 <template #loading> Carregando dados, por favor aguarde. </template>
