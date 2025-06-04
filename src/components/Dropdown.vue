@@ -5,7 +5,7 @@ import { computed, onMounted, ref } from 'vue';
 const props = defineProps({
     placeholder: String,
     getData: Function,
-    modelValue: Number
+    modelValue: Object,
 });
 
 const data = ref([]);
@@ -17,8 +17,13 @@ onMounted(async () => {
 const emit = defineEmits(['update:modelValue']);
 
 const model = computed({
-  get: () => props.modelValue,
-  set: val => emit('update:modelValue', val)
+    get() {
+        if (props.modelValue) {
+            return props.modelValue.key ?? props.modelValue.id ?? null;
+        }
+        return null;
+    },
+    set: val => emit('update:modelValue', val)
 });
 
 </script>

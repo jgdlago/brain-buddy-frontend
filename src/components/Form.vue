@@ -33,10 +33,6 @@
 
     const handleAdd = () => {
         obj.value = { ...props.object.value };
-        obj.value = {
-            name: '',
-            description: '',
-        };
         edit.value = false;
         modalVisible.value = true;
     }
