@@ -14,7 +14,7 @@
 </script>
 
     <template>
-        <Drawer :visible="visible" header="Menu" position="left" dismissable @update:visible="() => {emit('update:visible', false)}">
+        <Drawer :visible="visible" header="Menu" position="left" dismissable @update:visible="() => {emit('update:visible', false)}" class="menu">
             <div class="flex flex-col items-start">
                 <Button link label="Player" @click="router.push('/player')"/>
                 <Button link label="Áreas de atividade" @click="router.push('/activity-area')"/>
