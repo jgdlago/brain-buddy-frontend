@@ -67,7 +67,7 @@ import { FilterMatchMode } from '@primevue/core/api';
                 </IconField>
                 <Select :options="turmas" v-model="selectedGroup" key="id" optionLabel="name" placeholder="Selecione" @change="(row) => handleGetPlayers(row)"/>
             </div>
-            <DataTable v-model:filters="filters" v-model:expandedRows="expandedRows" :value="players" class="size-full" showGridlines paginator :rows="15" :globalFilterFields="['name']" strippedRows paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" 
+            <DataTable v-model:filters="filters" v-model:expandedRows="expandedRows" :value="players" class="size-full" paginator :rows="15" :globalFilterFields="['name']" strippedRows paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" 
             currentPageReportTemplate="{first} até {last} de {totalRecords}" removableSort>
                 <Column expander class="w-1/20"/>
                 <Column field="name" header="Nome" class="w-9/20" sortable/>
@@ -75,17 +75,20 @@ import { FilterMatchMode } from '@primevue/core/api';
                 <Column field="gender" header="Gênero" class="w-3/20" sortable/>
                 <Column field="" header="Desempenho" sortable/>
                 <template #expansion="slotProps">
-                    <div>
+                    <div class="flex flex-col">
                         <strong>Último progresso salvo: {{ formatDateTime(slotProps.data.updated_at) }}</strong>
-                        <Carousel
-                        :value="slotProps.data.charts"
-                        :numVisible="1"
-                        :numScroll="1"
-                        >
-                            <template #item="chartSlot">
-                                <Graph :type="chartSlot.data.type" :data="chartSlot.data"/>
-                            </template>
-                        </Carousel>
+                        <div class="flex justify-center">
+                            <Carousel
+                            :value="slotProps.data.charts"
+                            :numVisible="1"
+                            :numScroll="1"
+                            circular
+                            >
+                                <template #item="chartSlot">
+                                    <Graph :type="chartSlot.data.type" :data="chartSlot.data"/>
+                                </template>
+                            </Carousel>
+                        </div>
                     </div>
                 </template>
                 <template #empty> Nenhum jogador encontrado. </template> 

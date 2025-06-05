@@ -11,7 +11,7 @@ const userStore = useUserStore();
 </script>
 
 <template>
-    <Toolbar> 
+    <Toolbar class="toolbar"> 
         <template #start>
             <i class="pi pi-bars" style="margin-right: 1rem;" @click="sidebarVisible = true"/>
             Olá, {{userStore.name}} 
@@ -26,4 +26,11 @@ const userStore = useUserStore();
 </template>
 
 <style scoped>
+    .toolbar {
+        border: 0px;
+        border-radius: 0;
+        background-color: #7D5BA6;
+        color: white;
+        box-shadow: var(--shadow-heavy);
+    }
 </style>
