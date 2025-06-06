@@ -29,3 +29,15 @@ export const getSeverity = (flag) => {
       return null;
   }
 };
+
+export const toastSuccess = (toast, message, summary = "Sucesso") => {
+  toast.add({ severity: "success", summary, detail: message, life: 3000 });
+};
+
+export const toastInfo = (toast, message, summary = "Aviso") => {
+  toast.add({ severity: "info", summary, detail: message, life: 3000 });
+};
+
+export const toastError = (toast, message, summary = "Erro") => {
+  toast.add({ severity: "error", summary, detail: message, life: 3000 });
+};

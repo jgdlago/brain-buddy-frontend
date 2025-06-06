@@ -2,23 +2,25 @@
   import { ref } from 'vue';
   import { login, recover } from '../services/AuthService';
   import { useRouter } from 'vue-router';
-  import { Button, Dialog } from 'primevue';
-import Text from '../components/Input/Text.vue';
-import Password from '../components/Input/Password.vue';
+  import { Button, Dialog, Toast, useToast } from 'primevue';
+  import Text from '../components/Input/Text.vue';
+  import Password from '../components/Input/Password.vue';
+import { toastError } from '../utils/utils';
 
   const object = ref({
     email: '',
     senha: ''  
   })
   const router = useRouter();
+
+  const toast = useToast();
   
   const handleLogin = async () => {
     try {
       const data = await login(object.value);
       router.push('/player');
     } catch (error) {
-      // TODO implementar alerta decente
-      alert('Erro no login: ' + error.message);
+      toastError(toast, error.response.data.message);
     }
   } 
 
@@ -42,6 +44,7 @@ import Password from '../components/Input/Password.vue';
 </script>
 
 <template>
+  <Toast/>
   <div class="container authContainer">
     <div class="auth">
       <div class="authTitle">
@@ -54,7 +57,7 @@ import Password from '../components/Input/Password.vue';
         <Text v-model="object.email" label="E-mail" id="email" type="text" />
         <Password v-model="object.senha" label="Senha" id="senha" type="password" showForgot v-model:forgotRef="modalVisible"/>
 
-        <Button label="Entrar" @click="handleLogin" type="submit"/>
+        <Button label="Entrar" type="submit" class="btn"/>
         <Button variant="link" label="Crie uma conta" size="small" @click="handleRegister"/>
       </form>
     </div>

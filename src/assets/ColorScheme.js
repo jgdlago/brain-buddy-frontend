@@ -31,14 +31,17 @@ export const ColorScheme = definePreset(Aura, {
     colorScheme: {
       light: {
         primary: {
-          background: "#f5f5f5",
-          backgroundContrast: "#ffffff",
-          header: "#5B9BD5",
-          color: "#f5c67c",
+          background: "#f5f5f5", //fundo
+          backgroundContrast: "#ffffff", //contraste do fundo
+          header: "#5B9BD5", //header
+          color: "#f5c67c", //principal
           inverseColor: "#ffffff",
-          hoverColor: "#e6b35c",
-          activeColor: "#d9a648",
+          hoverColor: "#e6b35c", //hover
+          activeColor: "#d9a648", //active
           danger: "#E57373",
+          //acrescentar confirmação e alerta
+          //substituir por variáveis
+          // TODO essas aqui vâo ser usadas? apagar ou renomear
           50: "{teal.50}",
           100: "{teal.100}",
           200: "{teal.200}",
@@ -52,10 +55,10 @@ export const ColorScheme = definePreset(Aura, {
           950: "{teal.950}",
         },
         highlight: {
-          background: "{teal.950}",
-          focusBackground: "{teal.700}",
-          color: "#ffffff",
-          focusColor: "#ffffff",
+          background: "#f5c67c", //focado
+          focusBackground: "#e6b35c", //focado dps de hover em outro item
+          color: "#ffffff", //texto
+          focusColor: "#ffffff", //texto dps de hover
         },
       },
       dark: {

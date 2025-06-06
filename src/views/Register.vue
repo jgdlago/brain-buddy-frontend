@@ -48,7 +48,7 @@ import Password from '../components/Input/Password.vue';
         <Password v-model="object.senha" label="Senha" id="senha" type="password"/>
         <Password v-model="object.senhaConf" label="Confirme a senha" id="senhaConf" type="password"/>
 
-        <Button label="Cadastrar" @click="handleCadastrar"/>
+        <Button label="Cadastrar" type="submit" class="btn"/>
         <Button variant="link" label="Já tenho uma conta" size="small" @click="handleEntrar"/>
       </form>
     </div>
