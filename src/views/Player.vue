@@ -1,10 +1,10 @@
 <script setup>
     import { onMounted, ref } from 'vue';
-    import { Carousel, Column, DataTable, IconField, InputIcon, InputText, Select } from 'primevue';
+    import { Carousel, Column, DataTable, IconField, InputIcon, InputText, Select, Tag } from 'primevue';
     import { getPlayers } from '../services/PlayerService';
     import { getGroups } from '../services/GroupService';
     import { useUserStore } from '../stores/userStore';
-    import { formatDateTime} from '../utils/utils';
+    import { formatDateTime, getSeverity} from '../utils/utils';
     import Graph from '../components/Graph.vue';
 import { createChart } from '../utils/graphUtils';
 import { FilterMatchMode } from '@primevue/core/api';
@@ -73,7 +73,11 @@ import { FilterMatchMode } from '@primevue/core/api';
                 <Column field="name" header="Nome" class="w-9/20" sortable/>
                 <Column field="age" header="Idade" class="w-2/20" sortable/>
                 <Column field="gender" header="Gênero" class="w-3/20" sortable/>
-                <Column field="" header="Desempenho" sortable/>
+                <Column field="performance_flag" header="Desempenho" sortable>
+                    <template #body="slotProps">
+                        <Tag :value="slotProps.data.performance_flag" :severity="getSeverity(slotProps.data.performance_flag)" />
+                    </template>
+                </Column>
                 <template #expansion="slotProps">
                     <div class="flex flex-col">
                         <strong>Último progresso salvo: {{ formatDateTime(slotProps.data.updated_at) }}</strong>
