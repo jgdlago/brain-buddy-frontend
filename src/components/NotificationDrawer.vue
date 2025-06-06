@@ -5,7 +5,7 @@ import { ref } from 'vue';
     const data = ref([
         {
             id: 1,
-            title: 'Ex 1'
+            title: 'Exemplo 1'
         }
     ])
 
