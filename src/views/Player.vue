@@ -1,6 +1,6 @@
 <script setup>
     import { onMounted, ref } from 'vue';
-    import { Carousel, Column, DataTable, IconField, InputIcon, InputText, Select, Tag } from 'primevue';
+    import { Carousel, Column, DataTable, IconField, InputIcon, InputText, Select, Tag, Toolbar } from 'primevue';
     import { getPlayers } from '../services/PlayerService';
     import { getGroups } from '../services/GroupService';
     import { useUserStore } from '../stores/userStore';
@@ -58,17 +58,24 @@ import { FilterMatchMode } from '@primevue/core/api';
 <template>
     <div class="container">
         <div class="box">
-            <div class="flex justify-between w-full">
-                <IconField>
-                    <InputIcon>
-                        <i class="pi pi-search" />
-                    </InputIcon>
-                    <InputText v-model="filters['global'].value" placeholder="Busca" />
-                </IconField>
-                <Select :options="turmas" v-model="selectedGroup" key="id" optionLabel="name" placeholder="Selecione" @change="(row) => handleGetPlayers(row)"/>
-            </div>
+            <Toolbar class="w-full toolbar">
+                <template #start>
+                    <IconField>
+                        <InputIcon>
+                            <i class="pi pi-search" />
+                        </InputIcon>
+                        <InputText v-model="filters['global'].value" placeholder="Buscar" />
+                    </IconField>
+                </template>
+                <template #center>
+                    <h3>Jogadores</h3>
+                </template>
+                <template #end>
+                    <Select :options="turmas" v-model="selectedGroup" key="id" optionLabel="name" placeholder="Selecione" @change="(row) => handleGetPlayers(row)"/>
+                </template>
+            </Toolbar>
             <DataTable v-model:filters="filters" v-model:expandedRows="expandedRows" :value="players" class="size-full" paginator :rows="15" :globalFilterFields="['name']" strippedRows paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" 
-            currentPageReportTemplate="{first} até {last} de {totalRecords}" removableSort>
+            currentPageReportTemplate="{first} até {last} de {totalRecords}" removableSort sort>
                 <Column expander class="w-1/20"/>
                 <Column field="name" header="Nome" class="w-9/20" sortable/>
                 <Column field="age" header="Idade" class="w-2/20" sortable/>

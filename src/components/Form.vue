@@ -1,8 +1,9 @@
 <script setup>
-    import { Button, Column, DataTable, Dialog, IconField, InputIcon, InputText, Popover } from 'primevue';
+    import { Button, Column, DataTable, Dialog, IconField, InputIcon, InputText, Popover, Toolbar } from 'primevue';
     import { ref } from 'vue';
 
     const props = defineProps({
+        title: String,
         columns: {
             type: Array,
             default: []
@@ -42,7 +43,16 @@
 <template>
     <div class="container">
         <div class="box">
-            <Button label="Adicionar" class="button" @click="handleAdd"/>
+            <Toolbar class="w-full toolbar">
+                <template #start>
+                </template>
+                <template #center>
+                    <h3>{{props.title}}</h3>
+                </template>
+                <template #end>
+                    <Button label="Adicionar" class="button" @click="handleAdd"/>
+                </template>
+            </Toolbar>
             <DataTable class="size-full" scrollable scrollHeight="100vh" :value="props.data" showGridlines strippedRows paginator :rows="15" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" 
             currentPageReportTemplate="{first} até {last} de {totalRecords}" removableSort>
                 <template #empty> Nenhum dado encontrado. </template> 
