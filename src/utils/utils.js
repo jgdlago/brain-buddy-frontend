@@ -13,3 +13,19 @@ export const formatDateTime = (isoString) => {
     minute: "2-digit",
   });
 };
+
+export const getSeverity = (flag) => {
+  switch (flag) {
+    case "Alto":
+      return "success";
+
+    case "Médio":
+      return "secondary";
+
+    case "Baixo":
+      return "danger";
+
+    default:
+      return null;
+  }
+};

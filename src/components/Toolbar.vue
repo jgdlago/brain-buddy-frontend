@@ -29,8 +29,8 @@ const userStore = useUserStore();
     .toolbar {
         border: 0px;
         border-radius: 0;
-        background-color: #7D5BA6;
-        color: white;
+        background-color: var(--p-primary-header);
+        color: var(--p-primary-inverse-color);
         box-shadow: var(--shadow-heavy);
     }
 </style>
