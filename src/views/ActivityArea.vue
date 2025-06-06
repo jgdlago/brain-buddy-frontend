@@ -43,7 +43,7 @@
 </script>
 
 <template>
-    <Form :columns="columns" :data="data" :object="object" :handleDelete="handleDelete">
+    <Form title="Áreas de atividade" :columns="columns" :data="data" :object="object" :handleDelete="handleDelete">
         <template #addContent="{ form, edit}">
             <form  @submit.prevent="submitForm(form, edit)">
                 <Text label="Nome" v-model="form.name"/>

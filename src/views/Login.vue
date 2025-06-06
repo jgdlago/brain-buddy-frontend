@@ -42,16 +42,22 @@ import Password from '../components/Input/Password.vue';
 </script>
 
 <template>
-  <div class="container">
-    <h1>Painel Brain Buddy</h1>
+  <div class="container authContainer">
+    <div class="auth">
+      <div class="authTitle">
+        <img src="../assets/images/logo.ico" alt="Logo" />
+        <h1>Painel Brain Buddy</h1>
+        <h2>Entrar</h2>
+      </div>
 
-    <form @submit.prevent="handleLogin">
-      <Text v-model="object.email" label="E-mail" id="email" type="text" />
-      <Password v-model="object.senha" label="Senha" id="senha" type="password" showForgot v-model:forgotRef="modalVisible"/>
+      <form @submit.prevent="handleLogin">
+        <Text v-model="object.email" label="E-mail" id="email" type="text" />
+        <Password v-model="object.senha" label="Senha" id="senha" type="password" showForgot v-model:forgotRef="modalVisible"/>
 
-      <Button label="Entrar" @click="handleLogin" type="submit"/>
-      <Button variant="link" label="Crie uma conta" size="small" @click="handleRegister"/>
-    </form>
+        <Button label="Entrar" @click="handleLogin" type="submit"/>
+        <Button variant="link" label="Crie uma conta" size="small" @click="handleRegister"/>
+      </form>
+    </div>
   </div>
   <Dialog v-model:visible="modalVisible" modal header="Recuperar senha">
     <div>
