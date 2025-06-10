@@ -10,7 +10,7 @@ import { ColorScheme } from "./assets/ColorScheme";
 import { createPinia } from "pinia";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import router from "./router";
-import { ToastService } from "primevue";
+import { ToastService, useToast } from "primevue";
 
 const app = createApp(App);
 

@@ -2,9 +2,10 @@
   import { ref } from 'vue';
   import { register } from '../services/AuthService';
   import { useRouter } from 'vue-router';
-import { Button } from 'primevue';
+import { Button, Toast, useToast } from 'primevue';
 import Text from '../components/Input/Text.vue';
 import Password from '../components/Input/Password.vue';
+import { toastError } from '../utils/utils';
 
   const object = ref({
     nome: '',
@@ -14,14 +15,14 @@ import Password from '../components/Input/Password.vue';
   })
 
   const router = useRouter();
+  const toast = useToast();
   
   const handleCadastrar = async () => {
     try {
-      const data = await register(object.value);
+      await register(object.value);
       router.push('/player');
     } catch (error) {
-      // TODO implementar alerta decente
-      alert('Erro no login: ' + error.message);
+      toastError(toast, error.response.data.message);
     }
   } 
 
@@ -32,6 +33,7 @@ import Password from '../components/Input/Password.vue';
 </script>
 
 <template>
+  <Toast/>
   <div class="container authContainer">
     <div class="auth">
       <div class="authTitle">

@@ -5,19 +5,20 @@
   import { Button, Dialog, Toast, useToast } from 'primevue';
   import Text from '../components/Input/Text.vue';
   import Password from '../components/Input/Password.vue';
-import { toastError } from '../utils/utils';
+  import { toastError } from '../utils/utils';
 
   const object = ref({
     email: '',
     senha: ''  
   })
+  
   const router = useRouter();
 
   const toast = useToast();
   
   const handleLogin = async () => {
     try {
-      const data = await login(object.value);
+      await login(object.value);
       router.push('/player');
     } catch (error) {
       toastError(toast, error.response.data.message);
@@ -28,10 +29,9 @@ import { toastError } from '../utils/utils';
 
   const handleRecover = async () => {
     try {
-      const data = await recover(emailRecover.value);
+      await recover(emailRecover.value);
     } catch (error) {
-      // TODO implementar alerta decente
-      alert('Erro no login: ' + error.message);
+      toastError(toast, error.response.data.message);
     }
   }
 
@@ -54,7 +54,7 @@ import { toastError } from '../utils/utils';
       </div>
 
       <form @submit.prevent="handleLogin">
-        <Text v-model="object.email" label="E-mail" id="email" type="text" />
+        <Text v-model="object.email" label="E-mail" id="email" type="text"/>
         <Password v-model="object.senha" label="Senha" id="senha" type="password" showForgot v-model:forgotRef="modalVisible"/>
 
         <Button label="Entrar" type="submit" class="btn"/>
@@ -63,11 +63,11 @@ import { toastError } from '../utils/utils';
     </div>
   </div>
   <Dialog v-model:visible="modalVisible" modal header="Recuperar senha">
-    <div>
+    <object @submit.prevent="handleRecover">
       <p>Insira um email para receber as instruções para recuperar o acesso a sua conta.</p>
       <Text v-model="emailRecover" label="E-mail" id="emailRecover" type="text"/>
-      <Button label="Recuperar" @click="handleRecover"/>
-    </div>
+      <Button label="Recuperar" type="submit"/>
+    </object>
   </Dialog>
 </template>
 
