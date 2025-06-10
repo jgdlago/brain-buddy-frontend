@@ -6,7 +6,8 @@ import { InputText } from 'primevue';
 const props = defineProps({
   modelValue: String,
   id: String,
-  label: String
+  label: String,
+  max: [Number, undefined]
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -19,6 +20,6 @@ const inputValue = computed({
 
 <template>
   <InputWrapper :id="id" :label="label">
-    <InputText v-model="inputValue" :id="id" size="large" />
+    <InputText v-model="inputValue" :id="id" size="large" :maxlength="props.max"/>
   </InputWrapper>
 </template>

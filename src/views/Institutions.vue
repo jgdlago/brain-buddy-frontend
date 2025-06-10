@@ -1,15 +1,17 @@
 <script setup>
     import Form from '../components/Form.vue';
     import { onMounted, ref } from 'vue';
-    import { Button, Select } from 'primevue';
+    import { Button, Toast, useToast } from 'primevue';
     import { addInstitution, deleteInstitution, getInstitutions, updateInstitution } from '../services/InstitutionService';
     import Text from '../components/Input/Text.vue';
     import TextMask from '../components/Input/TextMask.vue';
     import Dropdown from '../components/Dropdown.vue';
     import { listActivityArea } from '../services/ActivityAreaService';
     import { listUsers } from '../services/UserService';
+import { toastError, toastSuccess } from '../utils/utils';
 
     const data = ref(null);
+    const toast = useToast();
 
     const columns = [
         {
@@ -41,24 +43,42 @@
         data.value = await getInstitutions();
     });
 
-    const submitForm = (form, edit) => {
+    const submitForm = async (form, edit, close) => {
         if (edit) {
-            updateInstitution(form);
+            try {
+                await updateInstitution(form);    
+                toastSuccess(toast, 'Instituição atualizada com sucesso');
+                close();  
+            } catch (error) {
+                toastError(toast, error.response.data.message); 
+            }
         } else {
-            addInstitution(form);
+            try {
+                await addInstitution(form);  
+                toastSuccess(toast, 'Instituição cadastrada com sucesso');
+                close();  
+            } catch (error) {
+                toastError(toast, error.response.data.message); 
+            }
         }
     }
 
-    const handleDelete = (row) => {
-        deleteInstitution(row.id);
+    const handleDelete = async (row) => {
+        try {
+            await deleteInstitution(row.id);
+            toastSuccess(toast, 'Instituição excluída com sucesso');
+        } catch (error) {
+            toastError(toast, error.response.data.message);
+        }
     }
 
 </script>
 
 <template>
+    <Toast/>
     <Form title="Instituições" :columns="columns" :data="data" :object="object" :handleDelete="handleDelete">
-        <template #addContent="{ form, edit}">
-            <form  @submit.prevent="submitForm(form, edit)">
+        <template #addContent="{ form, edit, close}">
+            <form  @submit.prevent="submitForm(form, edit, close)">
                 <Text label="Nome" v-model="form.name"/>
                 <TextMask label="CNPJ" v-model="form.cnpj" mask="cnpj"/>
                 <Dropdown v-model="form.activity_area" :getData='listActivityArea' placeholder="Área de atividade" class="input"/>
