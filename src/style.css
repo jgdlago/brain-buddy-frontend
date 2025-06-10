@@ -64,7 +64,7 @@ body {
 }
 
 .authTitle {
-  color: var(--p-primary-900);
+  color: var(--p-primary-dark-blue);
   font-weight: 100;
   display: flex;
   flex-direction: column;
@@ -96,7 +96,8 @@ h3 {
 /* Form */
 
 .p-inputtext,
-.p-textarea {
+.p-textarea,
+.input {
   width: 20vw !important;
   font-size: 1rem !important;
 }
@@ -140,11 +141,6 @@ form {
 }
 
 /* Datatable */
-
-.p-datatable-thead {
-  font-weight: bold !important;
-  background-color: aqua;
-}
 
 td {
   padding: 0.5rem !important;

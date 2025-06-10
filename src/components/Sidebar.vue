@@ -25,6 +25,6 @@
 
     <style scoped>
         Button {
-            color: var(--p-primary-900);
+            color: var(--p-primary-dark-blue);
         }
     </style> 
