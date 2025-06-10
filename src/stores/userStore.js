@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { encryptedStore } from "./encryptedStore";
 
 export const useUserStore = defineStore("user", {
   state: () => ({ id: null, token: null, name: "user" }),
@@ -12,7 +13,6 @@ export const useUserStore = defineStore("user", {
   },
 
   persist: {
-    storage: sessionStorage,
-    //TODO analisar melhor maneira de criptografar/proteger
+    storage: encryptedStore,
   },
 });
