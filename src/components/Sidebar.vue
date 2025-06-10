@@ -11,6 +11,11 @@
 
     const emit = defineEmits(['update:visible']);
 
+    const logoff = () => {
+        sessionStorage.clear();
+        router.push('/login');
+    }
+
 </script>
 
     <template>
@@ -20,6 +25,9 @@
                 <Button link label="Áreas de atividade" @click="router.push('/activity-area')"/>
                 <Button link label="Instituições" @click="router.push('/institutions')"/>
             </div>
+            <template #footer>
+                <Button link label="Sair" style="color: var(--p-primary-danger)" @click="logoff()"/>
+            </template>
         </Drawer>
     </template>
 
