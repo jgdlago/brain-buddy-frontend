@@ -11,6 +11,11 @@
 
     const emit = defineEmits(['update:visible']);
 
+    const navigate = (route) => {
+        router.push(route);
+        emit('update:visible', false);
+    }
+
     const logoff = () => {
         sessionStorage.clear();
         router.push('/login');
@@ -21,9 +26,9 @@
     <template>
         <Drawer :visible="visible" header="Menu" position="left" dismissable @update:visible="() => {emit('update:visible', false)}" class="menu">
             <div class="flex flex-col items-start">
-                <Button link label="Player" @click="router.push('/player')"/>
-                <Button link label="Áreas de atividade" @click="router.push('/activity-area')"/>
-                <Button link label="Instituições" @click="router.push('/institutions')"/>
+                <Button link label="Player" @click="navigate('/player')"/>
+                <Button link label="Áreas de atividade" @click="navigate('/activity-area')"/>
+                <Button link label="Instituições" @click="navigate('/institutions')"/>
             </div>
             <template #footer>
                 <Button link label="Sair" style="color: var(--p-primary-danger)" @click="logoff()"/>

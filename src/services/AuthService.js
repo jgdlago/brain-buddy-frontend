@@ -2,11 +2,6 @@ import Axios from "../axios/api";
 import { useUserStore } from "../stores/userStore";
 
 export const login = async ({ email, senha }) => {
-  if (email == "admin" && senha == "admin") {
-    //TODO temp
-    return;
-  }
-
   const response = await Axios.post("/auth/login", {
     email: email,
     password: senha,

@@ -63,11 +63,11 @@
     </div>
   </div>
   <Dialog v-model:visible="modalVisible" modal header="Recuperar senha">
-    <object @submit.prevent="handleRecover">
+    <form @submit.prevent="handleRecover">
       <p>Insira um email para receber as instruções para recuperar o acesso a sua conta.</p>
       <Text v-model="emailRecover" label="E-mail" id="emailRecover" type="text"/>
       <Button label="Recuperar" type="submit"/>
-    </object>
+    </form>
   </Dialog>
 </template>
 
