@@ -61,8 +61,8 @@
             <form  @submit.prevent="submitForm(form, edit)">
                 <Text label="Nome" v-model="form.name"/>
                 <TextMask label="CNPJ" v-model="form.cnpj" mask="cnpj"/>
-                <Dropdown v-model="form.activity_area" :getData='listActivityArea' placeholder="Área de atividade"/>
-                <Dropdown v-model="form.owner_user" :getData='listUsers' placeholder="Usuário responsável"/>
+                <Dropdown v-model="form.activity_area" :getData='listActivityArea' placeholder="Área de atividade" class="input"/>
+                <Dropdown v-model="form.owner_user" :getData='listUsers' placeholder="Usuário responsável" class="input"/>
                 <Button label="Cadastrar" type="submit"/>
             </form>
         </template>

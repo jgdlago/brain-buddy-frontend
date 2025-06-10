@@ -26,39 +26,37 @@ import Aura from "@primeuix/themes/aura";
 #d9a648   dourado active
 */
 
+const l = {
+  white: "#ffffff",
+  lgGray: "#f5f5f5",
+  lgGold: "#f5c67c",
+  mdGold: "#e6b35c",
+  dkGold: "#d9a648",
+  blue: "#5b9bd5",
+  dkBlue: "{teal.900}",
+  red: "#e57373",
+};
+
 export const ColorScheme = definePreset(Aura, {
   semantic: {
     colorScheme: {
       light: {
         primary: {
-          background: "#f5f5f5", //fundo
-          backgroundContrast: "#ffffff", //contraste do fundo
-          header: "#5B9BD5", //header
-          color: "#f5c67c", //principal
-          inverseColor: "#ffffff",
-          hoverColor: "#e6b35c", //hover
-          activeColor: "#d9a648", //active
-          danger: "#E57373",
-          //acrescentar confirmação e alerta
-          //substituir por variáveis
-          // TODO essas aqui vâo ser usadas? apagar ou renomear
-          50: "{teal.50}",
-          100: "{teal.100}",
-          200: "{teal.200}",
-          300: "{teal.300}",
-          400: "{teal.400}",
-          500: "{teal.500}",
-          600: "{teal.600}",
-          700: "{teal.700}",
-          800: "{teal.800}",
-          900: "{teal.900}",
-          950: "{teal.950}",
+          background: l.lgGray, //fundo
+          backgroundContrast: l.white, //contraste do fundo
+          header: l.blue, //header
+          color: l.lgGold, //principal
+          inverseColor: l.white, //contraste na header
+          hoverColor: l.mdGold, //hover
+          activeColor: l.dkGold, //active
+          danger: l.red, //danger
+          darkBlue: l.dkBlue,
         },
         highlight: {
-          background: "#f5c67c", //focado
-          focusBackground: "#e6b35c", //focado dps de hover em outro item
-          color: "#ffffff", //texto
-          focusColor: "#ffffff", //texto dps de hover
+          background: l.lgGold, //focado
+          focusBackground: l.mdGold, //focado dps de hover em outro item
+          color: l.white, //texto
+          focusColor: l.white, //texto dps de hover
         },
       },
       dark: {
