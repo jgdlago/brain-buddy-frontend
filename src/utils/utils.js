@@ -14,20 +14,32 @@ export const formatDateTime = (isoString) => {
   });
 };
 
-export const getSeverity = (flag) => {
-  switch (flag) {
-    case "Alto":
-      return "success";
-
-    case "Médio":
-      return "secondary";
-
-    case "Baixo":
-      return "danger";
-
-    default:
-      return null;
-  }
+export const PERFORMANCE = {
+  very_high: {
+    index: 4,
+    severity: "success",
+    label: "Muito alto",
+  },
+  high: {
+    index: 3,
+    severity: "success",
+    label: "Alto",
+  },
+  medium: {
+    index: 2,
+    severity: "secondary",
+    label: "Médio",
+  },
+  low: {
+    index: 1,
+    severity: "danger",
+    label: "Baixo",
+  },
+  very_low: {
+    index: 0,
+    severity: "danger",
+    label: "Muito baixo",
+  },
 };
 
 export const toastSuccess = (toast, message, summary = "Sucesso") => {

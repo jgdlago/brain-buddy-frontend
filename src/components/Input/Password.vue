@@ -8,7 +8,8 @@ const props = defineProps({
   id: String,
   label: String,
   showForgot: Boolean,
-  forgotRef: Boolean
+  forgotRef: Boolean,
+  feedback: [Boolean, false]
 });
 
 const emit = defineEmits(['update:modelValue', 'update:forgotRef']);
@@ -31,8 +32,13 @@ const inputValue = computed({
       v-model="inputValue"
       :id="id"
       size="large"
-      :feedback="false"
+      :feedback="props.feedback"
       :toggleMask="true"
+      autocomplete="new-password"
+      mediumRegex="^.{8,}" 
+      strongRegex="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}"
     />
+    <!-- medio: 8 chars -->
+    <!-- forte: 1 minusculo, 1 maiusculo e 1 numero, 8 char -->
   </InputWrapper>
 </template>

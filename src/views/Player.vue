@@ -4,10 +4,10 @@
     import { getPlayers } from '../services/PlayerService';
     import { getGroups } from '../services/GroupService';
     import { useUserStore } from '../stores/userStore';
-    import { formatDateTime, getSeverity} from '../utils/utils';
+    import { formatDateTime, PERFORMANCE} from '../utils/utils';
     import Graph from '../components/Graph.vue';
-import { createChart } from '../utils/graphUtils';
-import { FilterMatchMode } from '@primevue/core/api';
+    import { createChart } from '../utils/graphUtils';
+    import { FilterMatchMode } from '@primevue/core/api';
 
     const players = ref([]);
     const turmas = ref([]);
@@ -32,6 +32,7 @@ import { FilterMatchMode } from '@primevue/core/api';
 
         players.value = rawPlayers.map(player => ({
             ...player,
+            performance_index: PERFORMANCE[player.performance_flag].index,
             charts: [
                 createChart({
                     labels: ['Fase 1', 'Fase 2', 'Fase 3'],
@@ -47,6 +48,8 @@ import { FilterMatchMode } from '@primevue/core/api';
                 }),
             ]
         }))
+
+        console.log(players.value);
     }
 
     const filters = ref({
@@ -77,20 +80,26 @@ import { FilterMatchMode } from '@primevue/core/api';
             <DataTable v-model:filters="filters" v-model:expandedRows="expandedRows" :value="players" class="size-full" paginator :rows="15" :globalFilterFields="['name']" strippedRows paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" 
             currentPageReportTemplate="{first} até {last} de {totalRecords}" removableSort sort>
                 <Column expander class="w-1/20"/>
-                <Column field="name" header="Nome" class="w-9/20" sortable/>
+                <Column field="name" header="Nome" class="w-8/20" sortable/>
                 <Column field="age" header="Idade" class="w-2/20" sortable/>
                 <Column field="gender" header="Gênero" class="w-3/20" sortable/>
-                <Column field="performance_flag" header="Desempenho" sortable>
-                    <template #body="slotProps">
-                        <Tag :value="slotProps.data.performance_flag" :severity="getSeverity(slotProps.data.performance_flag)" />
+                <Column field="performance_flag" header="Nível de conhecimento" class="w-6/20" sortable sortField="performance_index">
+                    <template #body="{data}">
+                        <Tag :value="PERFORMANCE[data.performance_flag].label" :severity="PERFORMANCE[data.performance_flag].severity" />
                     </template>
                 </Column>
-                <template #expansion="slotProps">
+                <Column field="performance_flag">
+                    <template #body="{data}">
+                        <!-- TODO provisório -->
+                        <i class="pi pi-flag-fill" v-if="data.performance_flag === 'very_low'" style="color: var(--p-primary-danger)"/> 
+                    </template>
+                </Column>
+                <template #expansion="{data}">
                     <div class="flex flex-col">
-                        <strong>Último progresso salvo: {{ formatDateTime(slotProps.data.updated_at) }}</strong>
+                        <strong>Último progresso salvo: {{ formatDateTime(data.updated_at) }}</strong>
                         <div class="flex justify-center">
                             <Carousel
-                            :value="slotProps.data.charts"
+                            :value="data.charts"
                             :numVisible="1"
                             :numScroll="1"
                             circular
