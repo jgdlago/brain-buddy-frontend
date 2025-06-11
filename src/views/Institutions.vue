@@ -39,15 +39,18 @@ import { toastError, toastSuccess } from '../utils/utils';
         owner_user: null
     }
 
-    onMounted(async () => {
+    const getData = async () => {
         data.value = await getInstitutions();
-    });
+    }
+
+    onMounted(getData);
 
     const submitForm = async (form, edit, close) => {
         if (edit) {
             try {
                 await updateInstitution(form);    
                 toastSuccess(toast, 'Instituição atualizada com sucesso');
+                await getData();
                 close();  
             } catch (error) {
                 toastError(toast, error.response.data.message); 
@@ -56,6 +59,7 @@ import { toastError, toastSuccess } from '../utils/utils';
             try {
                 await addInstitution(form);  
                 toastSuccess(toast, 'Instituição cadastrada com sucesso');
+                await getData();
                 close();  
             } catch (error) {
                 toastError(toast, error.response.data.message); 
@@ -63,10 +67,12 @@ import { toastError, toastSuccess } from '../utils/utils';
         }
     }
 
-    const handleDelete = async (row) => {
+    const handleDelete = async (row, close) => {
         try {
             await deleteInstitution(row.id);
             toastSuccess(toast, 'Instituição excluída com sucesso');
+            await getData();
+            close();
         } catch (error) {
             toastError(toast, error.response.data.message);
         }

@@ -10,6 +10,18 @@
   --shadow: 0px 0px 5px 1px #dfdfdf;
 }
 
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --shadow-heavy: none;
+    --shadow: none;
+  }
+
+  .p-inputtext,
+  .p-select {
+    background: var(--p-primary-background) !important;
+  }
+} */
+
 body {
   margin: 0;
 }
@@ -64,7 +76,7 @@ body {
 }
 
 .authTitle {
-  color: var(--p-primary-dark-blue);
+  color: var(--p-primary-contrast-text);
   font-weight: 100;
   display: flex;
   flex-direction: column;
@@ -172,18 +184,3 @@ canvas {
 i:hover {
   cursor: pointer;
 }
-
-/* TODO */
-
-/* @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-} */

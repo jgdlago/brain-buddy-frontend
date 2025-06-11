@@ -45,12 +45,10 @@
     }
 
     const handleDelete = () => {
-        props.handleDelete(obj.value);
+        props.handleDelete(obj.value, () => {
+            modalDeleteVisible.value = false;
+        });
     }
-
-    const closeModal = () => {
-        modalVisible.value = false;
-    };
 
 </script>
 
@@ -88,7 +86,7 @@
         </div>
     </div>
     <Dialog :header="edit ? 'Editar' : 'Inserir'" v-model:visible="modalVisible" modal dismissableMask>
-        <slot name="addContent" :form="obj" :edit="edit" :close="closeModal"/>
+        <slot name="addContent" :form="obj" :edit="edit" :close="() => modalVisible = false"/>
     </Dialog>
     <Dialog header="Confirmar exclusão" v-model:visible="modalDeleteVisible" modal dismissableMask>
         <div class="flex flex-col">

@@ -38,6 +38,6 @@
 
     <style scoped>
         Button {
-            color: var(--p-primary-dark-blue);
+            color: var(--p-primary-contrast-text);
         }
     </style> 
