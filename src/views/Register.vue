@@ -47,7 +47,7 @@ import { toastError } from '../utils/utils';
       <form @submit.prevent="handleCadastrar">
         <Text v-model="object.nome" label="Nome" id="nome" type="text" />
         <Text v-model="object.email" label="E-mail" id="email" type="text" />
-        <Password v-model="object.senha" label="Senha" id="senha" type="password"/>
+        <Password v-model="object.senha" label="Senha" id="senha" type="password" feedback/>
         <Password v-model="object.senhaConf" label="Confirme a senha" id="senhaConf" type="password"/>
 
         <Button label="Cadastrar" type="submit" class="btn"/>

@@ -26,7 +26,7 @@
     <template>
         <Drawer :visible="visible" header="Menu" position="left" dismissable @update:visible="() => {emit('update:visible', false)}" class="menu">
             <div class="flex flex-col items-start">
-                <Button link label="Player" @click="navigate('/player')"/>
+                <Button link label="Jogadores" @click="navigate('/player')"/>
                 <Button link label="Áreas de atividade" @click="navigate('/activity-area')"/>
                 <Button link label="Instituições" @click="navigate('/institutions')"/>
             </div>
