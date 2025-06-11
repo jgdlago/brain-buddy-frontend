@@ -33,8 +33,14 @@ const l = {
   mdGold: "#e6b35c",
   dkGold: "#d9a648",
   blue: "#5b9bd5",
-  dkBlue: "{teal.900}",
+  dkBlue: "#0a0e4f",
   red: "#e57373",
+};
+
+const d = {
+  light: "#1f1f23",
+  dark: "#121215",
+  darker: "#0e0e11",
 };
 
 export const ColorScheme = definePreset(Aura, {
@@ -50,7 +56,7 @@ export const ColorScheme = definePreset(Aura, {
           hoverColor: l.mdGold, //hover
           activeColor: l.dkGold, //active
           danger: l.red, //danger
-          darkBlue: l.dkBlue,
+          contrastText: l.dkBlue,
         },
         highlight: {
           background: l.lgGold, //focado
@@ -61,27 +67,21 @@ export const ColorScheme = definePreset(Aura, {
       },
       dark: {
         primary: {
-          color: "{zinc.50}",
-          inverseColor: "{zinc.950}",
-          hoverColor: "{zinc.100}",
-          activeColor: "{zinc.200}",
-          50: "{zinc.950}",
-          100: "{zinc.900}",
-          200: "{zinc.800}",
-          300: "{zinc.700}",
-          400: "{zinc.600}",
-          500: "{zinc.500}",
-          600: "{zinc.400}",
-          700: "{zinc.300}",
-          800: "{zinc.200}",
-          900: "{zinc.100}",
-          950: "{zinc.50}",
+          background: d.darker, //fundo
+          backgroundContrast: d.dark, //contraste do fundo
+          header: d.light, //header
+          color: l.dkGold, //principal
+          inverseColor: l.white, //contraste na header
+          hoverColor: l.mdGold, //hover
+          activeColor: l.lgGold, //active
+          danger: l.red, //danger
+          contrastText: l.lgGray,
         },
         highlight: {
-          background: "rgba(250, 250, 250, .16)",
-          focusBackground: "rgba(250, 250, 250, .24)",
-          color: "rgba(255,255,255,.87)",
-          focusColor: "rgba(255,255,255,.87)",
+          background: l.mdGold, //focado
+          focusBackground: l.dkGold, //focado dps de hover em outro item
+          color: l.white, //texto
+          focusColor: l.white, //texto dps de hover
         },
       },
     },

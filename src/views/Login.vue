@@ -1,5 +1,5 @@
 <script setup>
-  import { ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import { login, recover } from '../services/AuthService';
   import { useRouter } from 'vue-router';
   import { Button, Dialog, Toast, useToast } from 'primevue';
@@ -40,6 +40,10 @@
   }
 
   const modalVisible = ref(false);
+
+  onMounted(() => {
+    document.documentElement.classList.remove('p-dark');
+  });
 
 </script>
 
