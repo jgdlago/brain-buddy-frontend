@@ -30,6 +30,7 @@
 
         const rawPlayers = await getPlayers(row.value.id);
 
+        //TODO provisório, até a api retornar os dados pros gráficos
         players.value = rawPlayers.map(player => ({
             ...player,
             performance_index: PERFORMANCE[player.performance_flag].index,
@@ -48,8 +49,6 @@
                 }),
             ]
         }))
-
-        console.log(players.value);
     }
 
     const filters = ref({
@@ -80,9 +79,10 @@
             <DataTable v-model:filters="filters" v-model:expandedRows="expandedRows" :value="players" class="size-full" paginator :rows="15" :globalFilterFields="['name']" strippedRows paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" 
             currentPageReportTemplate="{first} até {last} de {totalRecords}" removableSort sort>
                 <Column expander class="w-1/20"/>
-                <Column field="name" header="Nome" class="w-8/20" sortable/>
+                <Column field="name" header="Nome" class="w-7/20" sortable/>
                 <Column field="age" header="Idade" class="w-2/20" sortable/>
                 <Column field="gender" header="Gênero" class="w-3/20" sortable/>
+                <Column field="character" header="Personagem" class="w-1/20" sortable/>
                 <Column field="performance_flag" header="Nível de conhecimento" class="w-6/20" sortable sortField="performance_index">
                     <template #body="{data}">
                         <Tag :value="PERFORMANCE[data.performance_flag].label" :severity="PERFORMANCE[data.performance_flag].severity" />

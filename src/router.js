@@ -6,6 +6,7 @@ import AppLayout from "./layouts/AppLayout.vue";
 import AuthLayout from "./layouts/AuthLayout.vue";
 import ActivityArea from "./views/ActivityArea.vue";
 import Institutions from "./views/Institutions.vue";
+import Group from "./views/Group.vue";
 
 // component: () => import("@/components/Login.vue")
 
@@ -18,6 +19,7 @@ const routes = [
       { path: "/player", component: Player },
       { path: "/activity-area", component: ActivityArea },
       { path: "/institutions", component: Institutions },
+      { path: "/group", component: Group },
     ],
   },
   {

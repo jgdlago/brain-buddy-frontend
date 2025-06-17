@@ -1,13 +1,27 @@
-# VUE (Vite)
+# Vue 3 + Vite
 
-Componentes do PrimeVue
+## Tecnologias Utilizadas
 
-Icones do PrimeIcons
+- [Vue 3](https://vuejs.org/)
+- [Vite](https://vitejs.dev/)
+- [PrimeVue](https://primevue.org/) – Biblioteca de componentes UI
+- [PrimeIcons](https://primefaces.org/primeicons/) – Ícones integrados ao PrimeVue
+- [Chart.js](https://www.chartjs.org/) – Biblioteca de gráficos integrada ao PrimeVue
+- [Tailwind CSS](https://tailwindcss.com/) – Utilitário para estilização rápida
+- [Pinia](https://pinia.vuejs.org/) – Gerenciador de estado oficial do Vue 3
+- [JWT](https://jwt.io/) – Autenticação baseada em JSON Web Token
 
-Tailwind
+---
 
-JWT
+## Instalação
 
-Pinia
+```bash
+git clone https://github.com/jgdlago/brain-buddy-frontend
+cd brain-buddy-frontend
+npm install
+npm run dev
+```
 
-APEXCHARTS.JS
+## Arquivo `.env`
+
+Crie um arquivo `.env` na raiz do projeto, baseado no `.env.example`
