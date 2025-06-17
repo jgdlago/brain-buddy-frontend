@@ -30,6 +30,7 @@
                 <Button link label="Áreas de atividade" @click="navigate('/activity-area')"/>
                 <Button link label="Instituições" @click="navigate('/institutions')"/>
                 <Button link label="Turmas" @click="navigate('/group')"/>
+                <Button link label="Minhas turmas" @click="navigate('/my-group')"/>
             </div>
             <template #footer>
                 <Button link label="Sair" style="color: var(--p-primary-danger)" @click="logoff()"/>

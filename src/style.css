@@ -8,6 +8,7 @@
   font-family: "Poppins", system-ui, Avenir, Helvetica, Arial, sans-serif;
   --shadow-heavy: 0px 0px 5px 3px #dbdbdb;
   --shadow: 0px 0px 5px 1px #dfdfdf;
+  --p-inputtext-border-radius: 12px;
 }
 
 /* @media (prefers-color-scheme: dark) {
