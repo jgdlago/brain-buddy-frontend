@@ -49,7 +49,6 @@ body {
   width: 80%;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   gap: 0.5rem;
@@ -150,6 +149,12 @@ form {
 .p-toolbar-end {
   justify-content: flex-end;
   display: flex;
+}
+
+.p-toolbar-start,
+.p-toolbar-center,
+.p-toolbar-end {
+  max-width: 33%;
 }
 
 /* Datatable */
