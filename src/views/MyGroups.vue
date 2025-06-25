@@ -15,17 +15,7 @@ onMounted(async () => {
 })
 
 const handleGetPlayers = async (id) => {
-    // players.value = await getPlayers(id);
-    players.value = [{
-        "id": 0,
-        "name": "string",
-        "age": 0,
-        "gender": "Masculino",
-        "character": "Tito",
-        "institution": "string",
-        "performance_flag": "string",
-        "help_flags": "string"
-    }]
+    players.value = await getPlayers(id);
 }
 
 const onTabOpen = async (event) => {
@@ -42,7 +32,7 @@ const onTabOpen = async (event) => {
                     <AccordionHeader>{{ group.name }}</AccordionHeader>
                     <AccordionContent>
                         <DataTable :value="players" class="size-full" paginator :rows="15" strippedRows paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" 
-                        currentPageReportTemplate="{first} até {last} de {totalRecords}" removableSort sort>
+                        currentPageReportTemplate="{first} até {last} de {totalRecords}" removableSort sort showGridlines>
                             <Column field="name" header="Nome" class="w-4/10" sortable/>
                             <Column field="institution.name" header="Instituição" class="w-5/10" sortable/>
                             <template #empty> Nenhum jogador encontrado. </template> 
