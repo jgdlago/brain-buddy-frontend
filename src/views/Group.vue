@@ -11,7 +11,7 @@ import { useUserStore } from '../stores/userStore';
 
 //TODO ver como implementar o filtro, rever opções, adicionar "TODOS" como uma opção do multiselect, rever como fazer o filtro da idade
 
-const charts =[
+const charts = [
     createChart({
         labels: ['Fase 1', 'Fase 2', 'Fase 3'],
         label: 'Desempenho',
@@ -29,7 +29,7 @@ const charts =[
 const selectedGroup = ref(null);
 const selectedPlayers = ref([]);
 const selectedGenders = ref(null);
-const selectedAges = ref([]);
+const selectedAges = ref([6, 18]);
 const selectedSchoolYears = ref(null);
 const selectedInstitutionType = ref(null);
 const selectedCharacters = ref(null);
@@ -39,34 +39,34 @@ const groups = ref([]);
 const institutionType = ref([]);
 
 const genders = [{
-        value: 'male',
-        label: 'Masculino'
-    },
-    {
-        value: 'female',
-        label: 'Feminino'
-    }
+    value: 'male',
+    label: 'Masculino'
+},
+{
+    value: 'female',
+    label: 'Feminino'
+}
 ];
 
 const characters = [{
-        value: 'tito',
-        label: 'Tito'
-    },
-    {
-        value: 'nina',
-        label: 'Nina'
-    }
+    value: 'tito',
+    label: 'Tito'
+},
+{
+    value: 'nina',
+    label: 'Nina'
+}
 ];
 
 //TODO descobrir oq por aqui
 const schoolYears = [{
-        value: 1,
-        label: '1-2° ano'
-    },
-    {
-        value: 2,
-        label: 'exemplo'
-    }
+    value: 1,
+    label: '1-2° ano'
+},
+{
+    value: 2,
+    label: 'exemplo'
+}
 ];
 
 const userStore = useUserStore();
@@ -83,7 +83,7 @@ const handleGetGraph = () => {
     let filter = `?group=${selectedGroup.value.id}`;
 
     if (selectedPlayers.value.length > 0) {
-    filter += `&player=${selectedPlayers.value.map(player => player.key).join(',')}`;
+        filter += `&player=${selectedPlayers.value.map(player => player.key).join(',')}`;
     }
 
     console.log(filter);
@@ -101,86 +101,121 @@ watch(selectedPlayers, () => {
 </script>
 
 <template>
-    <div class="container">
-        <div class="box items-center">
-            <Toolbar class="w-full toolbar">
-                <template #center>
-                    <h3>Visão geral da turma</h3>
-                </template>
-                <template #end>
-                    <Select :options="groups" v-model="selectedGroup" key="id" optionLabel="name" placeholder="Selecione" @change="() => handleGetGraph()"/>
-                </template>
-            </Toolbar>
-            <div class="filters">
-                <Toolbar class="w-full toolbar">
+    <div class="min-h-screen bg-gray-50 py-2 px-4">
+        <div class="max-w-7xl mx-auto">
+            <!-- Cabeçalho -->
+            <div class="text-center mb-4">
+                <h1 class="text-3xl font-bold text-gray-800">Análise de Desempenho</h1>
+                <p class="text-gray-600 mt-2">Visualização de dados educacionais</p>
+            </div>
+
+            <!-- Container principal -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <!-- Toolbar superior -->
+                <Toolbar class="custom-toolbar !p-4 !border-b !border-gray-200 !rounded-t-xl">
                     <template #start>
-                        <FilterSelect
-                            placeholder="Jogadores"
-                            v-model="selectedPlayers"
-                            :options="players"
-                            filter
-                        />
-                    </template>
-                    <template #center>
-                        <div class="flex flex-col justify-between w-full h-full items-center">
-                            <div class="text-center mb-[5px]">
-                            Idade: {{ selectedAges[0] }} a {{ selectedAges[1] }}
-                            </div>
-                            <Slider
-                                v-model="selectedAges"
-                                :min="6"
-                                :max="18"
-                                range
-                                class="w-8/10 md:w-80"
-                                id="age"
-                            />
+                        <div class="flex items-center">
+                            <i class="pi pi-users text-primary mr-3"></i>
+                            <h3 class="text-xl font-semibold">Visão geral da turma</h3>
                         </div>
                     </template>
                     <template #end>
-                        <FilterSelect
-                            placeholder="Gênero"
-                            v-model="selectedGenders"
-                            :options="genders"
-                        />
+                        <div class="flex items-center gap-2">
+                            <span class="text-gray-600 hidden sm:inline">Grupo:</span>
+                            <Select :options="groups" v-model="selectedGroup" optionLabel="name" placeholder="Selecione"
+                                class="min-w-[200px]" @change="handleGetGraph" />
+                        </div>
                     </template>
                 </Toolbar>
-                <Toolbar class="w-full toolbar">
-                    <template #start>
-                        <FilterSelect
-                            placeholder="Ano escolar" 
-                            v-model="selectedSchoolYears"
-                            :options="schoolYears"
-                        />
-                    </template>
-                    <template #center>
-                        <FilterSelect
-                            placeholder="Tipo de instituição" 
-                            v-model="selectedInstitutionType"
-                            :options="institutionType"
-                            filter
-                        />
-                    </template>
-                    <template #end>
-                        <FilterSelect
-                            placeholder="Personagem" 
-                            v-model="selectedCharacters"
-                            :options="characters"
-                        />
-                    </template>
-                </Toolbar>
-            </div>
-            <div class="flex flex-col w-full">
-                <div class="flex justify-center">
-                    <Carousel
-                    :value="charts"
-                    :numVisible="1"
-                    :numScroll="1"
-                    circular
-                    >
-                        <template #item="chart">
-                            <Graph :type="chart.data.type" :data="chart.data"/>
-                        </template>
-                    </Carousel>
+
+                <!-- Filtros -->
+                <div class="p-6">
+                    <!-- Primeira linha de filtros -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <!-- Filtro Jogadores -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Jogadores</label>
+                            <FilterSelect v-model="selectedPlayers" :options="players" filter
+                                placeholder="Selecione jogadores" class="w-full" />
+                        </div>
+
+                        <!-- Filtro Idade -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Idade</label>
+                            <div class="px-2">
+                                <div class="text-center text-sm text-gray-600 mb-1">
+                                    {{ selectedAges[0] }} a {{ selectedAges[1] }} anos
+                                </div>
+                                <Slider v-model="selectedAges" :min="6" :max="18" range class="w-full custom-slider" />
+                            </div>
+                        </div>
+
+                        <!-- Filtro Gênero -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Gênero</label>
+                            <FilterSelect v-model="selectedGenders" :options="genders" placeholder="Todos"
+                                class="w-full" />
+                        </div>
+                    </div>
+
+                    <!-- Segunda linha de filtros -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                        <!-- Filtro Ano Escolar -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Ano Escolar</label>
+                            <FilterSelect v-model="selectedSchoolYears" :options="schoolYears" placeholder="Selecione"
+                                class="w-full" />
+                        </div>
+
+                        <!-- Filtro Instituição -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de Instituição</label>
+                            <FilterSelect v-model="selectedInstitutionType" :options="institutionType" filter
+                                placeholder="Selecione" class="w-full" />
+                        </div>
+
+                        <!-- Filtro Personagem -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Personagem</label>
+                            <FilterSelect v-model="selectedCharacters" :options="characters" placeholder="Selecione"
+                                class="w-full" />
+                        </div>
+                    </div>
+
+                    <!-- Gráficos -->
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-semibold">Desempenho dos Alunos</h3>
+                            <div class="flex gap-2">
+                                <Button icon="pi pi-download" class="p-button-text p-button-sm" />
+                                <Button icon="pi pi-refresh" class="p-button-text p-button-sm" />
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-gray-200 rounded-lg p-4">
+                            <Carousel :value="charts" :numVisible="1" :numScroll="1" circular :autoplayInterval="5000">
+                                <template #item="chart">
+                                    <div class="flex items-center justify-center">
+                                        <Graph :type="chart.data.type" :data="chart.data" />
+                                    </div>
+                                </template>
+                                <template #previousicon>
+                                    <Button icon="pi pi-chevron-left"
+                                        class="p-button-rounded p-button-text absolute left-2" />
+                                </template>
+                                <template #nexticon>
+                                    <Button icon="pi pi-chevron-right"
+                                        class="p-button-rounded p-button-text absolute right-2" />
+                                </template>
+                            </Carousel>
+                        </div>
+                    </div>
+
+                    <!-- Botão de ação -->
+                    <div class="flex justify-center">
+                        <Button label="Atualizar Gráficos" icon="pi pi-chart-bar" @click="handleGetGraph"
+                            class="p-button-raised" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -188,7 +223,18 @@ watch(selectedPlayers, () => {
 </template>
 
 <style scoped>
-    .filters {
-        width: 80%;
+.custom-toolbar {
+
+    border: none !important;
+}
+
+.custom-slider {
+    :deep(.p-slider-range) {
+        background: linear-gradient(to right, #3b82f6, #10b981) !important;
     }
+
+    :deep(.p-slider-handle) {
+        border: 2px solid #3b82f6 !important;
+    }
+}
 </style>
