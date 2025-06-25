@@ -105,7 +105,7 @@
                             circular
                             >
                                 <template #item="chartSlot">
-                                    <Graph :type="chartSlot.data.type" :data="chartSlot.data"/>
+                                    <Graph :chartData="chartSlot.data"/>
                                 </template>
                             </Carousel>
                         </div>

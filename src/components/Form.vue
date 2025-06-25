@@ -76,7 +76,7 @@
                 </Column>
                 <Column>
                     <template #body="{ data: row }">
-                        <div class="flex gap-[0.5rem]">
+                        <div class="flex gap-[0.5rem] justify-center">
                             <Button icon="pi pi-pencil" link @click="() => handleEdit(row)"/>
                             <Button icon="pi pi-trash" link style="color: var(--p-primary-danger)" @click="() => confirmDelete(row)"/>
                         </div>
@@ -100,5 +100,4 @@
 </template>
 
 <style scoped>
-
 </style>

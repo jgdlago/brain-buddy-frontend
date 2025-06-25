@@ -12,30 +12,57 @@ const graphColor4 = "rgb(75, 192, 192)";
 const graphColor5 = "rgb(153, 102, 255)";
 const graphColor6 = "rgb(255, 159, 64)";
 
-export const createChart = ({ type, labels, label, data }) => ({
-  type,
-  labels,
-  datasets: [
-    {
-      label,
-      data,
-      backgroundColor: [
-        graphOutline1,
-        graphOutline2,
-        graphOutline3,
-        graphOutline4,
-        graphOutline5,
-        graphOutline6,
+export const createChart = ({ type, labels, label, data }) => {
+  const baseChart = {
+    type,
+    data: {
+      labels,
+      datasets: [
+        {
+          label,
+          data,
+          backgroundColor: [
+            graphOutline1,
+            graphOutline2,
+            graphOutline3,
+            graphOutline4,
+            graphOutline5,
+            graphOutline6,
+          ],
+          borderColor: [
+            graphColor1,
+            graphColor2,
+            graphColor3,
+            graphColor4,
+            graphColor5,
+            graphColor6,
+          ],
+          borderWidth: 1,
+        },
       ],
-      borderColor: [
-        graphColor1,
-        graphColor2,
-        graphColor3,
-        graphColor4,
-        graphColor5,
-        graphColor6,
-      ],
-      borderWidth: 1,
     },
-  ],
-});
+    options: {},
+  };
+
+  if (type === "bar") {
+    baseChart.options = {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    };
+  }
+
+  if (type === "pie") {
+    baseChart.options = {
+      plugins: {
+        legend: {
+          position: "top",
+        },
+      },
+    };
+  }
+
+  return baseChart;
+};
