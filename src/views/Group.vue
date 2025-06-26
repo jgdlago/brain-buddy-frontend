@@ -29,7 +29,7 @@ const charts = [
 const selectedGroup = ref(null);
 const selectedPlayers = ref([]);
 const selectedGenders = ref(null);
-const selectedAges = ref([6, 18]);
+const selectedAges = ref([6, 12]);
 const selectedSchoolYears = ref(null);
 const selectedInstitutionType = ref(null);
 const selectedCharacters = ref(null);
@@ -194,9 +194,9 @@ watch(selectedPlayers, () => {
 
                         <div class="bg-white border border-gray-200 rounded-lg p-4">
                             <Carousel :value="charts" :numVisible="1" :numScroll="1" circular :autoplayInterval="5000">
-                                <template #item="chart">
+                                <template #item="chartSlot">
                                     <div class="flex items-center justify-center">
-                                        <Graph :type="chart.data.type" :data="chart.data" />
+                                        <Graph :chartData="chartSlot.data" />
                                     </div>
                                 </template>
                                 <template #previousicon>
