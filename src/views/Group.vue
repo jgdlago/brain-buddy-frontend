@@ -167,6 +167,11 @@ const handleGetGraph = async () => {
                         </div>
                     </div>
 
+                    <!-- Botão de ação -->
+                    <div class="flex justify-center">
+                        <Button label="Atualizar Gráficos" icon="pi pi-chart-bar" @click="handleGetGraph" class="p-button-raised" />
+                    </div>
+
                     <!-- Gráficos -->
                     <div class="mb-6">
                         <div class="flex justify-between items-center mb-4">
@@ -194,11 +199,6 @@ const handleGetGraph = async () => {
                                 </template>
                             </Carousel>
                         </div>
-                    </div>
-
-                    <!-- Botão de ação -->
-                    <div class="flex justify-center">
-                        <Button label="Atualizar Gráficos" icon="pi pi-chart-bar" @click="handleGetGraph" class="p-button-raised" />
                     </div>
                 </div>
             </div>

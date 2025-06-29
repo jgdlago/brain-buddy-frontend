@@ -4,10 +4,11 @@ import { Button, Carousel, Column, DataTable, IconField, InputIcon, InputText, S
 import { getPlayers } from '../services/PlayerService';
 import { getGroups } from '../services/GroupService';
 import { useUserStore } from '../stores/userStore';
-import { formatDateTime, PERFORMANCE } from '../utils/utils';
+import { formatDateTime } from '../utils/utils';
 import Graph from '../components/Graph.vue';
 import { createChart } from '../utils/graphUtils';
 import { FilterMatchMode } from '@primevue/core/api';
+import { PERFORMANCE } from '../utils/objUtils';
 
 const players = ref([]);
 const turmas = ref([]);
@@ -125,10 +126,9 @@ const filters = ref({
                         </Column>
 
                         <Column field="gender" header="Gênero" sortable>
-
                             <template #body="{ data }">
                                 <div class="capitalize text-center text-gray-700">
-                                    {{ data.gender === 'male' ? 'Masculino' : 'Feminino' }}
+                                    {{ data.gender}}
                                 </div>
                             </template>
                         </Column>
@@ -136,7 +136,7 @@ const filters = ref({
                         <Column field="character" header="Personagem" sortable>
                             <template #body="{ data }">
                                 <div class="flex justify-center">
-                                    <Tag :value="data.character === 'tito' ? 'Tito' : 'Nina'" severity="success"
+                                    <Tag :value="data.character" severity="success"
                                         class="min-w-[70px] justify-center" />
                                 </div>
                             </template>
@@ -175,7 +175,7 @@ const filters = ref({
                                     <Carousel :value="data.charts" :numVisible="1" :numScroll="1" circular
                                         :autoplayInterval="5000">
                                         <template #item="chartSlot">
-                                            <div class="h-80">
+                                            <div>
                                                 <Graph :chartData="chartSlot.data" />
                                             </div>
                                         </template>
