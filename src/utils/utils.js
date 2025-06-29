@@ -53,3 +53,12 @@ export const toastInfo = (toast, message, summary = "Aviso") => {
 export const toastError = (toast, message, summary = "Erro") => {
   toast.add({ severity: "error", summary, detail: message, life: 3000 });
 };
+
+export const formatParams = (rawParams) => {
+  Object.fromEntries(
+    Object.entries(rawParams).filter(([_, value]) => {
+      if (Array.isArray(value)) return value.length > 0;
+      return value !== null && value !== undefined && value !== "";
+    })
+  );
+};

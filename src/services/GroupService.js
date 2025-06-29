@@ -1,4 +1,6 @@
 import Axios from "../axios/api";
+import qs from "qs";
+import { formatParams } from "../utils/utils";
 
 export const getGroups = async (userId) => {
   const response = await Axios.get(`/group?responsible_user_id=${userId}`);
@@ -7,11 +9,12 @@ export const getGroups = async (userId) => {
 
 export const listGroups = async (userId) => {
   const response = await Axios.get(`/list/group?responsible_user_id=${userId}`);
-  console.log(response.data);
   return response.data;
 };
 
-export const groupReport = async (body) => {
-  const response = await Axios.get(`/group/report`, body);
+export const groupReport = async (axiosParams) => {
+  const response = await Axios.get(`/report/group`, {
+    params: axiosParams,
+  });
   return response.data.data;
 };

@@ -19,6 +19,10 @@
         handleDelete: {
             type: Function,
             default: () => {}
+        },
+        loading: {
+            type: Boolean, //TODO conferir
+            default: false
         }
     });
 

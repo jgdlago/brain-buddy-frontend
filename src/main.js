@@ -10,7 +10,7 @@ import { ColorScheme } from "./assets/ColorScheme";
 import { createPinia } from "pinia";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import router from "./router";
-import { ToastService } from "primevue";
+import { ToastService, Tooltip } from "primevue";
 import locale from "./locale";
 
 const app = createApp(App);
@@ -33,5 +33,6 @@ pinia.use(piniaPluginPersistedstate);
 app.use(pinia);
 app.use(ToastService);
 app.use(router);
+app.directive("tooltip", Tooltip);
 
 app.mount("#app");

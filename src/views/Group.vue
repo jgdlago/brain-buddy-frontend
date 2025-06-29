@@ -52,24 +52,28 @@ onMounted(async () => {
 //etc
 
 const rawArray = (arr) => {
-    return toRaw(arr).map((item) => item.key);
+    try {
+        return toRaw(arr).map((item) => item.key);
+    } catch (error) {
+        return null;
+    }
 };
 
 const handleGetGraph = async () => {
-    const body = {
+    const params = {
         activity_area: rawArray(selectedActivityAreas.value),
-        age_max: selectedAges.value[0],
-        age_min: selectedAges.value[1],
-        character: selectedCharacters.value.key,
-        education_level: selectedEducationLevel.value.key,
-        gender: selectedGenders.value.key,
+        age_min: selectedAges.value[0],
+        age_max: selectedAges.value[1],
+        character: selectedCharacters.value?.key,
+        education_level: selectedEducationLevel.value?.key,
+        gender: selectedGenders.value?.key,
         group: rawArray(selectedGroup.value),
         player: rawArray(selectedPlayers.value),
     }
 
-    console.log(body);
+    console.log(params);
 
-    const response = await groupReport(body);
+    const response = await groupReport(params);
 }
 
 </script>

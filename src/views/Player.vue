@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { Carousel, Column, DataTable, IconField, InputIcon, InputText, Select, Tag, Toolbar } from 'primevue';
+import { Button, Carousel, Column, DataTable, IconField, InputIcon, InputText, Select, Tag, Toolbar } from 'primevue';
 import { getPlayers } from '../services/PlayerService';
 import { getGroups } from '../services/GroupService';
 import { useUserStore } from '../stores/userStore';
