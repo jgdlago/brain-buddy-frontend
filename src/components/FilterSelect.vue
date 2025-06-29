@@ -1,5 +1,5 @@
 <script setup>
-import { MultiSelect } from 'primevue';
+import { MultiSelect, Select } from 'primevue';
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -18,6 +18,10 @@ const props = defineProps({
     filter: {
         type: Boolean,
         default: false,
+    },
+    single: {
+        type: Boolean,
+        default: false
     }
 });
 
@@ -31,6 +35,7 @@ const value = computed({
 
 <template>
     <MultiSelect
+        v-if="!single"
         v-model="value"
         :options="options"
         optionLabel="label"
@@ -41,5 +46,15 @@ const value = computed({
         :placeholder="placeholder"
         :showToggleAll="filter"
         :maxSelectedLabels="1"
+    />
+    <Select
+        v-else
+        v-model="value"
+        :options="options"
+        optionLabel="label"
+        :filter="filter"
+        showClear
+        class="w-full"
+        :placeholder="placeholder"
     />
 </template>

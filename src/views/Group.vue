@@ -1,13 +1,14 @@
 <script setup>
-import { Carousel, Select, Slider, Toolbar } from 'primevue';
+import { Button, Carousel, Select, Slider, Toolbar } from 'primevue';
 import { createChart } from '../utils/graphUtils';
 import Graph from '../components/Graph.vue';
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, toRaw, watch } from 'vue';
 import { getPlayers, listPlayers } from '../services/PlayerService';
 import FilterSelect from '../components/FilterSelect.vue';
 import { listActivityArea } from '../services/ActivityAreaService';
-import { getGroups } from '../services/GroupService';
+import { getGroups, groupReport, listGroups } from '../services/GroupService';
 import { useUserStore } from '../stores/userStore';
+import { characters, educationLevel, genders } from '../utils/objUtils';
 
 //TODO ver como implementar o filtro, rever opções, adicionar "TODOS" como uma opção do multiselect, rever como fazer o filtro da idade
 
@@ -30,73 +31,46 @@ const selectedGroup = ref(null);
 const selectedPlayers = ref([]);
 const selectedGenders = ref(null);
 const selectedAges = ref([6, 12]);
-const selectedSchoolYears = ref(null);
-const selectedInstitutionType = ref(null);
+const selectedEducationLevel = ref(null);
+const selectedActivityAreas = ref(null);
 const selectedCharacters = ref(null);
 
 const players = ref([]);
 const groups = ref([]);
-const institutionType = ref([]);
-
-const genders = [{
-    value: 'male',
-    label: 'Masculino'
-},
-{
-    value: 'female',
-    label: 'Feminino'
-}
-];
-
-const characters = [{
-    value: 'tito',
-    label: 'Tito'
-},
-{
-    value: 'nina',
-    label: 'Nina'
-}
-];
-
-//TODO descobrir oq por aqui
-const schoolYears = [{
-    value: 1,
-    label: '1-2° ano'
-},
-{
-    value: 2,
-    label: 'exemplo'
-}
-];
+const activityAreas = ref([]);
 
 const userStore = useUserStore();
 
 onMounted(async () => {
     players.value = await listPlayers(selectedGroup);
-    institutionType.value = await listActivityArea();
-    groups.value = await getGroups(userStore.id);
-    selectedGroup.value = groups.value[0];
+    activityAreas.value = await listActivityArea();
+    groups.value = await listGroups(userStore.id);
 })
 
-const handleGetGraph = () => {
-    //TODO melhorar
-    let filter = `?group=${selectedGroup.value.id}`;
+//TODO conferir tudo certo
+//o select de players n deveria mostrar só os das turmas selecionadas?
+//etc
 
-    if (selectedPlayers.value.length > 0) {
-        filter += `&player=${selectedPlayers.value.map(player => player.key).join(',')}`;
+const rawArray = (arr) => {
+    return toRaw(arr).map((item) => item.key);
+};
+
+const handleGetGraph = async () => {
+    const body = {
+        activity_area: rawArray(selectedActivityAreas.value),
+        age_max: selectedAges.value[0],
+        age_min: selectedAges.value[1],
+        character: selectedCharacters.value.key,
+        education_level: selectedEducationLevel.value.key,
+        gender: selectedGenders.value.key,
+        group: rawArray(selectedGroup.value),
+        player: rawArray(selectedPlayers.value),
     }
 
-    console.log(filter);
+    console.log(body);
+
+    const response = await groupReport(body);
 }
-
-watch(selectedPlayers, () => {
-    handleGetGraph();
-})
-
-//provisório, só pra ver q funciona
-// watch(selectedPlayers, () => {
-//     console.log('players:', selectedPlayers.value);
-// });
 
 </script>
 
@@ -120,11 +94,11 @@ watch(selectedPlayers, () => {
                         </div>
                     </template>
                     <template #end>
-                        <div class="flex items-center gap-2">
+                        <!-- <div class="flex items-center gap-2">
                             <span class="text-gray-600 hidden sm:inline">Grupo:</span>
                             <Select :options="groups" v-model="selectedGroup" optionLabel="name" placeholder="Selecione"
                                 class="min-w-[200px]" @change="handleGetGraph" />
-                        </div>
+                        </div> -->
                     </template>
                 </Toolbar>
 
@@ -139,6 +113,13 @@ watch(selectedPlayers, () => {
                                 placeholder="Selecione jogadores" class="w-full" />
                         </div>
 
+                        <!-- Filtro de turmas -->
+                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Turmas</label>
+                            <FilterSelect v-model="selectedGroup" :options="groups" filter
+                                placeholder="Seleciona as turmas" class="w-full"/>
+                         </div>
+
                         <!-- Filtro Idade -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Idade</label>
@@ -146,14 +127,14 @@ watch(selectedPlayers, () => {
                                 <div class="text-center text-sm text-gray-600 mb-1">
                                     {{ selectedAges[0] }} a {{ selectedAges[1] }} anos
                                 </div>
-                                <Slider v-model="selectedAges" :min="6" :max="18" range class="w-full custom-slider" />
+                                <Slider v-model="selectedAges" :min="6" :max="12" range class="w-full custom-slider" />
                             </div>
                         </div>
 
                         <!-- Filtro Gênero -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Gênero</label>
-                            <FilterSelect v-model="selectedGenders" :options="genders" placeholder="Todos"
+                            <FilterSelect v-model="selectedGenders" :options="genders" placeholder="Todos" single
                                 class="w-full" />
                         </div>
                     </div>
@@ -163,21 +144,21 @@ watch(selectedPlayers, () => {
                         <!-- Filtro Ano Escolar -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Ano Escolar</label>
-                            <FilterSelect v-model="selectedSchoolYears" :options="schoolYears" placeholder="Selecione"
+                            <FilterSelect v-model="selectedEducationLevel" :options="educationLevel" placeholder="Selecione" single
                                 class="w-full" />
                         </div>
 
                         <!-- Filtro Instituição -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de Instituição</label>
-                            <FilterSelect v-model="selectedInstitutionType" :options="institutionType" filter
+                            <FilterSelect v-model="selectedActivityAreas" :options="activityAreas" filter
                                 placeholder="Selecione" class="w-full" />
                         </div>
 
                         <!-- Filtro Personagem -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Personagem</label>
-                            <FilterSelect v-model="selectedCharacters" :options="characters" placeholder="Selecione"
+                            <FilterSelect v-model="selectedCharacters" :options="characters" placeholder="Selecione" single
                                 class="w-full" />
                         </div>
                     </div>
@@ -192,7 +173,7 @@ watch(selectedPlayers, () => {
                             </div>
                         </div>
 
-                        <div class="bg-white border border-gray-200 rounded-lg p-4">
+                        <div class="bg-white border border-gray-200 rounded-lg p-4 flex justify-center">
                             <Carousel :value="charts" :numVisible="1" :numScroll="1" circular :autoplayInterval="5000">
                                 <template #item="chartSlot">
                                     <div class="flex items-center justify-center">
@@ -213,8 +194,7 @@ watch(selectedPlayers, () => {
 
                     <!-- Botão de ação -->
                     <div class="flex justify-center">
-                        <Button label="Atualizar Gráficos" icon="pi pi-chart-bar" @click="handleGetGraph"
-                            class="p-button-raised" />
+                        <Button label="Atualizar Gráficos" icon="pi pi-chart-bar" @click="handleGetGraph" class="p-button-raised" />
                     </div>
                 </div>
             </div>
