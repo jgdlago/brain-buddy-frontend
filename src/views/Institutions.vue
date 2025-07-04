@@ -96,13 +96,11 @@ const handleDelete = async (row, close) => {
                     :loading="loading">
                     <template #addContent="{ form, edit, close }">
                         <form @submit.prevent="submitForm(form, edit, close)"
-                            class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                            class="p-6 gap-5">
                             <Text label="Nome" v-model="form.name" class="md:col-span-2" />
                             <TextMask label="CNPJ" v-model="form.cnpj" mask="cnpj" />
-                            <Dropdown v-model="form.activity_area" :getData="listActivityArea"
-                                placeholder="Área de atividade" optionLabel="name" class="w-full" />
-                            <Dropdown v-model="form.owner_user" :getData="listUsers" placeholder="Usuário responsável"
-                                optionLabel="name" class="w-full" />
+                            <Dropdown v-model="form.activity_area" :getData="listActivityArea" placeholder="Área de atividade" class="w-full" />
+                            <Dropdown v-model="form.owner_user" :getData="listUsers" placeholder="Usuário responsável" class="w-full" />
                             <div class="md:col-span-2 flex justify-end gap-3 pt-4">
                                 <Button label="Cancelar" type="button" class="p-button-outlined p-button-secondary"
                                     @click="close" />
@@ -128,40 +126,46 @@ const handleDelete = async (row, close) => {
 </template>
 
 <style scoped>
-/* Estilos para os inputs */
+
+:deep(.p-inputwrapper),
 :deep(.p-inputtext) {
-    border-radius: 0.5rem !important;
-    border: 1px solid #e2e8f0 !important;
+    width: 100% !important;
 }
 
-:deep(.p-inputtext:focus) {
-    box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.2) !important;
-    border-color: #6366f1 !important;
-}
+/* Estilos para os inputs */
+/* :deep(.p-inputtext) { */
+    /* border-radius: 0.5rem !important; */
+    /* border: 1px solid #e2e8f0 !important; */
+/* } */
+
+/* :deep(.p-inputtext:focus) { */
+    /* box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.2) !important; */
+    /* border-color: #6366f1 !important; */
+/* } */
 
 /* Estilos para os dropdowns */
-:deep(.p-dropdown) {
-    width: 100% !important;
-    border-radius: 0.5rem !important;
-    border: 1px solid #e2e8f0 !important;
-}
+/* :deep(.p-dropdown) { */
+    /* width: 100% !important; */
+    /* border-radius: 0.5rem !important; */
+    /* border: 1px solid #e2e8f0 !important; */
+/* } */
 
 /* Estilos para os botões */
-:deep(.p-button) {
-    border-radius: 0.5rem !important;
-    padding: 0.5rem 1.25rem !important;
-    font-weight: 500 !important;
-}
+/* :deep(.p-button) { */
+    /* border-radius: 0.5rem !important; */
+    /* padding: 0.5rem 1.25rem !important; */
+    /* font-weight: 500 !important; */
+/* } */
 
-:deep(.p-button-primary) {
-    background: #4f46e5 !important;
-    border-color: #4f46e5 !important;
-}
+/* :deep(.p-button-primary) { */
+    /* background: #4f46e5 !important; */
+    /* border-color: #4f46e5 !important; */
+/* } */
 
-:deep(.p-button-primary:hover) {
-    background: #4338ca !important;
-    border-color: #4338ca !important;
-}
+/* :deep(.p-button-primary:hover) { */
+    /* background: #4338ca !important; */
+    /* border-color: #4338ca !important; */
+/* } */
 
 /* Estilos para a tabela */
 :deep(.p-datatable) {

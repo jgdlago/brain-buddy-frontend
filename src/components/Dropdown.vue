@@ -29,7 +29,7 @@ const model = computed({
 </script>
 
 <template>
-    <Select v-model="model" :options="data" optionLabel="label" optionValue="key" :placeholder="placeholder" emptyMessage="Nenhum item encontrado" editable/>
+    <Select v-model="model" :options="data" optionLabel="label" optionValue="key" :placeholder="placeholder" emptyMessage="Nenhum item encontrado"/>
 </template>
 
 <style scoped>

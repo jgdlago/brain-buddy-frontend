@@ -39,6 +39,8 @@ const players = ref([]);
 const groups = ref([]);
 const activityAreas = ref([]);
 
+const generated = ref(false);
+
 const userStore = useUserStore();
 
 onMounted(async () => {
@@ -60,6 +62,7 @@ const rawArray = (arr) => {
 };
 
 const handleGetGraph = async () => {
+    generated.value = true;
     const params = {
         activity_area: rawArray(selectedActivityAreas.value),
         age_min: selectedAges.value[0],
@@ -169,11 +172,11 @@ const handleGetGraph = async () => {
 
                     <!-- Botão de ação -->
                     <div class="flex justify-center">
-                        <Button label="Atualizar Gráficos" icon="pi pi-chart-bar" @click="handleGetGraph" class="p-button-raised" />
+                        <Button label="Aplicar filtros" icon="pi pi-chart-bar" @click="handleGetGraph" class="p-button-raised" />
                     </div>
 
                     <!-- Gráficos -->
-                    <div class="mb-6">
+                    <div v-if="generated" class="mb-6">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-lg font-semibold">Desempenho dos Alunos</h3>
                             <div class="flex gap-2">

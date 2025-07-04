@@ -19,7 +19,7 @@
   const handleLogin = async () => {
     try {
       await login(object.value);
-      router.push('/player');
+      router.push('/group');
     } catch (error) {
       toastError(toast, error.response.data.message);
     }

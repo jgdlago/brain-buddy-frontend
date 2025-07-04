@@ -153,7 +153,7 @@ const filters = ref({
                             </template>
                         </Column>
 
-                        <Column field="performance_flag" header="Ações">
+                        <Column field="performance_flag">
                             <template #body="{ data }">
                                 <div class="flex justify-center">
                                     <i v-if="data.performance_flag === 'very_low'"
@@ -172,8 +172,7 @@ const filters = ref({
                                 </div>
 
                                 <div class="bg-white p-4 rounded-lg border border-gray-200">
-                                    <Carousel :value="data.charts" :numVisible="1" :numScroll="1" circular
-                                        :autoplayInterval="5000">
+                                    <Carousel :value="data.charts" :numVisible="1" :numScroll="1" circular>
                                         <template #item="chartSlot">
                                             <div>
                                                 <Graph :chartData="chartSlot.data" />

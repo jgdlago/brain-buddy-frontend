@@ -34,7 +34,7 @@ const onTabOpen = async (event) => {
                         <DataTable :value="players" class="size-full" paginator :rows="15" strippedRows paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" 
                         currentPageReportTemplate="{first} até {last} de {totalRecords}" removableSort sort showGridlines>
                             <Column field="name" header="Nome" class="w-4/10" sortable/>
-                            <Column field="institution.name" header="Instituição" class="w-5/10" sortable/>
+                            <Column field="grouop.institution.name" header="Instituição" class="w-5/10" sortable/>
                             <template #empty> Nenhum jogador encontrado. </template> 
                             <template #loading> Carregando jogadores, por favor aguarde. </template>
                         </DataTable>

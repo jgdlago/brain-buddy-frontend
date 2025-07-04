@@ -85,15 +85,14 @@ const handleDelete = async (row, close) => {
                 <Form title="Áreas de atividade" :columns="columns" :data="data" :object="object"
                     :handleDelete="handleDelete" :loading="loading">
                     <template #addContent="{ form, edit, close }">
-                        <form @submit.prevent="submitForm(form, edit, close)" class="p-6 space-y-6">
+                        <form @submit.prevent="submitForm(form, edit, close)" class="p-6 gap-5">
                             <Text label="Nome" v-model="form.name" :max="255" class="w-full" />
                             <Textarea label="Descrição" v-model="form.description" class="w-full" rows="5" />
                             <div class="flex justify-end gap-3 pt-2">
                                 <Button label="Cancelar" type="button" class="p-button-outlined p-button-secondary"
                                     @click="close" />
-                                <Button :label="edit ? 'Atualizar' : 'Cadastrar'" type="submit"
-                                    class="p-button-primary" />
-                            </div>
+                                <Button :label="edit ? 'Atualizar' : 'Cadastrar'" type="submit" />
+                            </div>  
                         </form>
                     </template>
 
@@ -114,7 +113,7 @@ const handleDelete = async (row, close) => {
 
 <style scoped>
 /* Estilos para os inputs */
-:deep(.p-inputtext) {
+/*:deep(.p-inputtext) {
     border-radius: 0.5rem !important;
     border: 1px solid #e2e8f0 !important;
 }
@@ -125,29 +124,29 @@ const handleDelete = async (row, close) => {
 }
 
 /* Estilos para o textarea */
-:deep(.p-inputtextarea) {
-    width: 100% !important;
-    border-radius: 0.5rem !important;
-    border: 1px solid #e2e8f0 !important;
-    min-height: 120px !important;
-}
+/* :deep(.p-inputtextarea) { */
+    /* width: 100% !important; */
+    /* border-radius: 0.5rem !important; */
+    /* border: 1px solid #e2e8f0 !important; */
+    /* min-height: 120px !important; */
+/* } */
 
 /* Estilos para os botões */
-:deep(.p-button) {
-    border-radius: 0.5rem !important;
-    padding: 0.5rem 1.25rem !important;
-    font-weight: 500 !important;
-}
+/* :deep(.p-button) { */
+    /* border-radius: 0.5rem !important; */
+    /* padding: 0.5rem 1.25rem !important; */
+    /* font-weight: 500 !important; */
+/* } */
 
-:deep(.p-button-primary) {
-    background: #4f46e5 !important;
-    border-color: #4f46e5 !important;
-}
+/* :deep(.p-button-primary) { */
+    /* background: #4f46e5 !important; */
+    /* border-color: #4f46e5 !important; */
+/* } */
 
-:deep(.p-button-primary:hover) {
-    background: #4338ca !important;
-    border-color: #4338ca !important;
-}
+/* :deep(.p-button-primary:hover) { */
+    /* background: #4338ca !important; */
+    /* border-color: #4338ca !important; */
+/* }*/ 
 
 /* Estilos para a tabela */
 :deep(.p-datatable) {
