@@ -85,9 +85,10 @@ const logoff = () => {
             <ul class="space-y-1">
                 <li v-for="item in menuItems" :key="item.route">
                     <button @click="navigate(item.route)"
-                        class="w-full flex items-center p-3 rounded-lg text-white/90 hover:bg-white/5 transition-colors"
+                        class="w-full flex items-center p-3 rounded-lg text-white/90 transition-colors"
                         :class="{
                             'bg-primary': router.currentRoute.value.path === item.route,
+                            'hover:bg-white/5': router.currentRoute.value.path !== item.route,
                             'justify-center': !sidebarOpen
                         }">
                         <i :class="item.icon" class="text-lg" />

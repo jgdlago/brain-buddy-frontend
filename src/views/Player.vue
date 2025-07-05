@@ -178,14 +178,14 @@ const filters = ref({
                                                 <Graph :chartData="chartSlot.data" />
                                             </div>
                                         </template>
-                                        <template #previousicon>
+                                        <!-- <template #previousicon>
                                             <Button icon="pi pi-chevron-left"
                                                 class="p-button-rounded p-button-text absolute left-2" />
                                         </template>
                                         <template #nexticon>
                                             <Button icon="pi pi-chevron-right"
                                                 class="p-button-rounded p-button-text absolute right-2" />
-                                        </template>
+                                        </template> -->
                                     </Carousel>
                                 </div>
                             </div>

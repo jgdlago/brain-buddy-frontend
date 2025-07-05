@@ -49,10 +49,6 @@ onMounted(async () => {
     groups.value = await listGroups(userStore.id);
 })
 
-//TODO conferir tudo certo
-//o select de players n deveria mostrar só os das turmas selecionadas?
-//etc
-
 const rawArray = (arr) => {
     try {
         return toRaw(arr).map((item) => item.key);
@@ -76,7 +72,7 @@ const handleGetGraph = async () => {
 
     console.log(params);
 
-    const response = await groupReport(params);
+    await groupReport(params);
 }
 
 </script>
@@ -186,20 +182,20 @@ const handleGetGraph = async () => {
                         </div>
 
                         <div class="bg-white border border-gray-200 rounded-lg p-4 flex justify-center">
-                            <Carousel :value="charts" :numVisible="1" :numScroll="1" circular :autoplayInterval="5000">
+                            <Carousel :value="charts" :numVisible="1" :numScroll="1" circular>
                                 <template #item="chartSlot">
                                     <div class="flex items-center justify-center">
                                         <Graph :chartData="chartSlot.data" />
                                     </div>
                                 </template>
-                                <template #previousicon>
+                                <!-- <template #previousicon>
                                     <Button icon="pi pi-chevron-left"
-                                        class="p-button-rounded p-button-text absolute left-2" />
+                                        class="p-button-rounded p-button-text absolute left-2 p-primary" />
                                 </template>
                                 <template #nexticon>
                                     <Button icon="pi pi-chevron-right"
                                         class="p-button-rounded p-button-text absolute right-2" />
-                                </template>
+                                </template> -->
                             </Carousel>
                         </div>
                     </div>
