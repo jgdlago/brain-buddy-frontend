@@ -59,7 +59,7 @@ const logoff = () => {
                 <!-- Layout aberto -->
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3 min-w-0">
-                        <img src="../assets/images/logo.ico" alt="Logo" class="w-8 h-8 object-contain" />
+                        <img src="../../assets/images/logo.ico" alt="Logo" class="w-8 h-8 object-contain" />
                         <span class="text-white font-medium text-lg truncate">
                             Brain Buddy
                         </span>
@@ -72,7 +72,7 @@ const logoff = () => {
             <template v-else>
                 <!-- Layout fechado -->
                 <div class="flex flex-col items-center gap-3">
-                    <img src="../assets/images/logo.ico" alt="Logo" class="w-8 h-8 object-contain" />
+                    <img src="../../assets/images/logo.ico" alt="Logo" class="w-8 h-8 object-contain" />
                     <button @click="toggleSidebar" class="p-1 rounded text-white hover:bg-white/10 transition-colors">
                         <i class="pi pi-chevron-right text-sm" />
                     </button>
@@ -85,8 +85,7 @@ const logoff = () => {
             <ul class="space-y-1">
                 <li v-for="item in menuItems" :key="item.route">
                     <button @click="navigate(item.route)"
-                        class="w-full flex items-center p-3 rounded-lg text-white/90 transition-colors"
-                        :class="{
+                        class="w-full flex items-center p-3 rounded-lg text-white/90 transition-colors" :class="{
                             'bg-primary': router.currentRoute.value.path === item.route,
                             'hover:bg-white/5': router.currentRoute.value.path !== item.route,
                             'justify-center': !sidebarOpen

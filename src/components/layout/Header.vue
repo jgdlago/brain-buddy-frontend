@@ -1,6 +1,9 @@
 <script setup>
 import { ref } from 'vue';
+import { useUserStore } from '../../stores/userStore';
 
+const userStore = useUserStore();
+console.log(userStore)
 const notifications = ref([
     {
         id: 1,
@@ -53,9 +56,20 @@ const toggleNotifications = () => {
 </script>
 
 <template>
-    <header class="bg-white shadow-sm z-30 sticky top-0 left-0 right-0">
+    <header class="bg-white shadow-sm z-10 sticky top-0 left-0 right-0">
         <div class="flex items-center h-16 px-4 sm:px-6 lg:px-8">
-            <div class="flex-1 flex items-center justify-between">
+            <!-- Espaço vazio à esquerda para balancear com o ícone de notificações -->
+            <div class="flex-1"></div>
+
+            <!-- Nome do usuário centralizado -->
+            <div class="flex-1 flex justify-center">
+                <div class="text-center">
+                    <span class="text-lg font-semibold text-indigo-700">Olá, {{ userStore.name }}</span>
+                </div>
+            </div>
+
+            <!-- Ícone de notificações -->
+            <div class="flex-1 flex justify-end">
                 <div class="ml-auto relative">
                     <button @click="toggleNotifications"
                         class="p-2 rounded-full bg-indigo-100 text-indigo-600 hover:bg-indigo-200 focus:outline-none transition-colors">
