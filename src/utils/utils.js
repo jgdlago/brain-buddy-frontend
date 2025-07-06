@@ -5,13 +5,17 @@ export const formatDate = (isoString) => {
 
 export const formatDateTime = (isoString) => {
   const data = new Date(isoString);
-  return data.toLocaleString("pt-BR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  if (!isNaN(data.getTime())) {
+    return data.toLocaleString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  } else {
+    return "-";
+  }
 };
 
 export const toastSuccess = (toast, message, summary = "Sucesso") => {

@@ -156,7 +156,7 @@ const filters = ref({
                         <Column field="performance_flag">
                             <template #body="{ data }">
                                 <div class="flex justify-center">
-                                    <i v-if="data.performance_flag === 'very_low'"
+                                    <i v-if="data.help_flags.length !== 0"
                                         class="pi pi-exclamation-triangle text-red-500 text-lg"
                                         v-tooltip.top="'Necessita de atenção especial'" />
                                     <span v-else class="text-gray-400">-</span>
@@ -166,28 +166,57 @@ const filters = ref({
 
                         <template #expansion="{ data }">
                             <div class="p-4 bg-gray-50 rounded-lg">
-                                <div class="mb-4">
-                                    <h4 class="font-semibold text-gray-700">Último progresso salvo:</h4>
-                                    <p class="text-gray-600">{{ formatDateTime(data.updated_at) }}</p>
-                                </div>
+                                <div class="grid grid-cols-2 md:grid-cols-2 gap-4">
+                                    <div v-if="data.progresses.length !== 0" class="space-y-2">
+                                        <h3>Estatísticas gerais</h3>
+                                        <p class="text-gray-600">
+                                        <span class="font-semibold text-gray-700">Total de acertos: </span>
+                                        {{ data.progresses[data.progresses.length - 1].total_correct }}
+                                        </p>
+                                        <p class="text-gray-600">
+                                        <span class="font-semibold text-gray-700">Total de erros: </span>
+                                        {{ data.progresses[data.progresses.length - 1].total_wrong }}
+                                        </p>
+                                        <p class="text-gray-600">
+                                        <span class="font-semibold text-gray-700">Total de tentativas: </span>
+                                        {{ data.progresses[data.progresses.length - 1].total_attempts }}
+                                        </p>
+                                        <p class="text-gray-600">
+                                        <span class="font-semibold text-gray-700">Último progresso salvo: </span>
+                                        {{ formatDateTime(data.progresses[data.progresses.length - 1].completion_date) }}
+                                        </p>
+                                    </div>
 
-                                <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                    <div v-if="data.help_flags.length !== 0" class="space-y-2">
+                                        <h3>Pedidos de ajuda</h3>
+                                        <p class="text-gray-700 font-semibold mb-2">Ajuda Recebida:</p>
+                                        <div v-for="flag in data.help_flags" :key="flag.trigger_date">
+                                        <p class="text-gray-600">
+                                            <span class="font-semibold text-gray-700">{{ formatDateTime(flag.trigger_date) }}:</span>
+                                            Nível {{ flag.level_id }}
+                                        </p>
+                                        </div>
+                                    </div>
+                                    </div>
+ 
+
+                                <!-- <div class="bg-white p-4 rounded-lg border border-gray-200">
                                     <Carousel :value="data.charts" :numVisible="1" :numScroll="1" circular>
                                         <template #item="chartSlot">
                                             <div>
                                                 <Graph :chartData="chartSlot.data" />
                                             </div>
                                         </template>
-                                        <!-- <template #previousicon>
+                                        <template #previousicon>
                                             <Button icon="pi pi-chevron-left"
                                                 class="p-button-rounded p-button-text absolute left-2" />
                                         </template>
                                         <template #nexticon>
                                             <Button icon="pi pi-chevron-right"
                                                 class="p-button-rounded p-button-text absolute right-2" />
-                                        </template> -->
+                                        </template>
                                     </Carousel>
-                                </div>
+                                </div> -->
                             </div>
                         </template>
 
