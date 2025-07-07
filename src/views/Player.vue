@@ -168,7 +168,7 @@ const filters = ref({
                             <div class="p-4 bg-gray-50 rounded-lg">
                                 <div class="grid grid-cols-2 md:grid-cols-2 gap-4">
                                     <div v-if="data.progresses.length !== 0" class="space-y-2">
-                                        <h3>Estatísticas gerais</h3>
+                                        <h3 class="text-center">Estatísticas gerais</h3>
                                         <p class="text-gray-600">
                                         <span class="font-semibold text-gray-700">Total de acertos: </span>
                                         {{ data.progresses[data.progresses.length - 1].total_correct }}
@@ -186,10 +186,12 @@ const filters = ref({
                                         {{ formatDateTime(data.progresses[data.progresses.length - 1].completion_date) }}
                                         </p>
                                     </div>
+                                    <div v-else class="text-center">
+                                        <h4>Nenhum progresso registrado</h4>   
+                                    </div>
 
                                     <div v-if="data.help_flags.length !== 0" class="space-y-2">
-                                        <h3>Pedidos de ajuda</h3>
-                                        <p class="text-gray-700 font-semibold mb-2">Ajuda Recebida:</p>
+                                        <h3 class="text-center">Pedidos de ajuda</h3>
                                         <div v-for="flag in data.help_flags" :key="flag.trigger_date">
                                         <p class="text-gray-600">
                                             <span class="font-semibold text-gray-700">{{ formatDateTime(flag.trigger_date) }}:</span>
@@ -197,7 +199,10 @@ const filters = ref({
                                         </p>
                                         </div>
                                     </div>
+                                    <div v-else class="text-center">
+                                        <h4>Nenhum pedido de ajuda registrado</h4>   
                                     </div>
+                                </div>
  
 
                                 <!-- <div class="bg-white p-4 rounded-lg border border-gray-200">
