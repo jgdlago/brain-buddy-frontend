@@ -10,7 +10,7 @@ const isMobile = ref(window.innerWidth < 1024)
 
 // Itens do menu
 const menuItems = [
-    { name: 'Análise de desempenho', icon: 'pi pi-users', route: '/group' },
+    { name: 'Análise de aprendizado', icon: 'pi pi-users', route: '/group' },
     { name: 'Jogadores', icon: 'pi pi-user-plus', route: '/player' },
     { name: 'Áreas de atividade', icon: 'pi pi-briefcase', route: '/activity-area' },
     { name: 'Instituições', icon: 'pi pi-building', route: '/institutions' },

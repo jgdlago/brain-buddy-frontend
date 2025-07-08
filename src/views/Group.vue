@@ -13,33 +13,33 @@ import { toastError } from '../utils/utils';
 import { report, reportExcel } from '../services/ReportService';
 
 const charts = ref([])
-    // createChart({ //barras por player
-    //     labels: ['Tentativas', 'Acertos', 'Erros', 'Completos', 'Pedidos de ajuda'],
-    //     datasets: [
-    //         {
-    //             label: 'Maria',
-    //             data: [12, 10, 2, 1, 0]
-    //         },
-    //         {
-    //             label: 'João',
-    //             data: [15, 9, 6, 1, 2]
-    //         },
-    //         {
-    //             label: 'Maria',
-    //             data: [12, 10, 2, 1, 0]
-    //         },
-    //         {
-    //             label: 'João',
-    //             data: [10, 6, 4, 3, 1]
-    //         },
-    //         {
-    //             label: 'Ana',
-    //             data: [14, 11, 3, 2, 0]
-    //         },
-    //     ],
-    //     type: 'bar',
-    //     stacked: true
-    // }),
+// createChart({ //barras por player
+//     labels: ['Tentativas', 'Acertos', 'Erros', 'Completos', 'Pedidos de ajuda'],
+//     datasets: [
+//         {
+//             label: 'Maria',
+//             data: [12, 10, 2, 1, 0]
+//         },
+//         {
+//             label: 'João',
+//             data: [15, 9, 6, 1, 2]
+//         },
+//         {
+//             label: 'Maria',
+//             data: [12, 10, 2, 1, 0]
+//         },
+//         {
+//             label: 'João',
+//             data: [10, 6, 4, 3, 1]
+//         },
+//         {
+//             label: 'Ana',
+//             data: [14, 11, 3, 2, 0]
+//         },
+//     ],
+//     type: 'bar',
+//     stacked: true
+// }),
 
 const selectedGroup = ref(null);
 const selectedPlayers = ref([]);
@@ -90,9 +90,9 @@ const handleGetGraph = async () => {
 
         charts.value.push({
             title: 'Barras por jogador',
-            ...createChart({ 
+            ...createChart({
                 labels: ['Tentativas', 'Acertos', 'Erros', 'Completos', 'Pedidos de ajuda'],
-                datasets: 
+                datasets:
                     graphData.players.map(item => {
                         return {
                             label: item.name,
@@ -101,8 +101,8 @@ const handleGetGraph = async () => {
                                 item.totals.correct,
                                 item.totals.wrong,
                                 item.totals.completed,
-                                item.totals.help_flags   
-                            ] 
+                                item.totals.help_flags
+                            ]
                         }
                     }),
                 type: 'bar',
@@ -130,9 +130,9 @@ const handleGetGraph = async () => {
         });
         charts.value.push({
             title: 'Radar individual',
-            ...createChart({ 
+            ...createChart({
                 labels: ['Tentativas', 'Acertos', 'Erros', 'Completos', 'Pedidos de ajuda'],
-                datasets: 
+                datasets:
                     graphData.players.map(item => {
                         return {
                             label: item.name,
@@ -141,8 +141,8 @@ const handleGetGraph = async () => {
                                 item.totals.correct,
                                 item.totals.wrong,
                                 item.totals.completed,
-                                item.totals.help_flags   
-                            ] 
+                                item.totals.help_flags
+                            ]
                         }
                     }),
                 type: 'radar'
@@ -153,7 +153,7 @@ const handleGetGraph = async () => {
             ...createChart({
                 title: 'Pizza',
                 labels: ['Acertos', 'Erros'],
-                label: 'Desempenho',
+                label: 'Aprendizado',
                 data: [
                     graphData.totals.total_correct,
                     graphData.totals.total_wrong
@@ -162,7 +162,7 @@ const handleGetGraph = async () => {
             }),
         });
     } catch (error) {
-        toastError(toast, error.response?.data?.message || 'Erro ao carregar gráficos de desempenho');
+        toastError(toast, error.response?.data?.message || 'Erro ao carregar gráficos de aprendizado');
     }
 }
 
@@ -176,12 +176,12 @@ const handleDownload = async () => {
         gender: selectedGenders.value?.key,
         group: rawArray(selectedGroup.value),
         player: rawArray(selectedPlayers.value),
-    } 
+    }
 
     try {
         await reportExcel(params);
     } catch (error) {
-        toastError(toast, error.response?.data?.message || 'Erro ao exportar gráficos de desempenho');
+        toastError(toast, error.response?.data?.message || 'Erro ao exportar gráficos de aprendizado');
     }
 }
 
@@ -193,7 +193,7 @@ const handleDownload = async () => {
         <div class="max-w-7xl mx-auto">
             <!-- Cabeçalho -->
             <div class="text-center mb-4">
-                <h1 class="text-3xl font-bold text-gray-800">Análise de Desempenho</h1>
+                <h1 class="text-3xl font-bold text-gray-800">Análise de Aprendizado</h1>
                 <p class="text-gray-600 mt-2">Visualização de dados educacionais</p>
             </div>
 
@@ -219,7 +219,7 @@ const handleDownload = async () => {
                 <!-- Filtros -->
                 <div class="p-6">
                     <!-- Primeira linha de filtros -->
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                    <div class="grid grid-cols-4 md:grid-cols-3 gap-4 mb-6">
                         <!-- Filtro Jogadores -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Jogadores</label>
@@ -228,13 +228,21 @@ const handleDownload = async () => {
                         </div>
 
                         <!-- Filtro de turmas -->
-                         <div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Turmas</label>
                             <FilterSelect v-model="selectedGroup" :options="groups" filter
-                                placeholder="Seleciona as turmas" class="w-full"/>
-                         </div>
+                                placeholder="Seleciona as turmas" class="w-full" />
+                        </div>
 
                         <!-- Filtro Idade -->
+
+
+                        <!-- Filtro Gênero -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Gênero</label>
+                            <FilterSelect v-model="selectedGenders" :options="genders" placeholder="Todos" single
+                                class="w-full" />
+                        </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Idade</label>
                             <div class="px-2">
@@ -244,22 +252,15 @@ const handleDownload = async () => {
                                 <Slider v-model="selectedAges" :min="6" :max="12" range class="w-full custom-slider" />
                             </div>
                         </div>
-
-                        <!-- Filtro Gênero -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Gênero</label>
-                            <FilterSelect v-model="selectedGenders" :options="genders" placeholder="Todos" single
-                                class="w-full" />
-                        </div>
                     </div>
 
                     <!-- Segunda linha de filtros -->
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+                    <div class="grid grid-cols-4 md:grid-cols-3 gap-4 mb-8">
                         <!-- Filtro Ano Escolar -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Ano Escolar</label>
-                            <FilterSelect v-model="selectedEducationLevel" :options="educationLevel" placeholder="Selecione" single
-                                class="w-full" />
+                            <FilterSelect v-model="selectedEducationLevel" :options="educationLevel"
+                                placeholder="Selecione" single class="w-full" />
                         </div>
 
                         <!-- Filtro Instituição -->
@@ -272,22 +273,24 @@ const handleDownload = async () => {
                         <!-- Filtro Personagem -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Personagem</label>
-                            <FilterSelect v-model="selectedCharacters" :options="characters" placeholder="Selecione" single
-                                class="w-full" />
+                            <FilterSelect v-model="selectedCharacters" :options="characters" placeholder="Selecione"
+                                single class="w-full" />
                         </div>
 
                         <!-- Botão de ação -->
                         <div class="flex justify-center items-end">
-                            <Button label="Aplicar filtros" icon="pi pi-chart-bar" @click="handleGetGraph" class="p-button-raised h-7/10 w-7/10" />
+                            <Button label="Aplicar filtros" icon="pi pi-chart-bar" @click="handleGetGraph"
+                                class="p-button-raised h-7/10 w-7/10" />
                         </div>
                     </div>
 
                     <!-- Gráficos -->
                     <div v-if="generated" class="mb-6">
                         <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-lg font-semibold">Desempenho dos Alunos</h3>
+                            <h3 class="text-lg font-semibold">Aprendizado dos Alunos</h3>
                             <div class="flex gap-2">
-                                <Button icon="pi pi-download" class="p-button-text p-button-sm" @click="handleDownload"/>
+                                <Button icon="pi pi-download" class="p-button-text p-button-sm"
+                                    @click="handleDownload" />
                             </div>
                         </div>
 
@@ -295,7 +298,7 @@ const handleDownload = async () => {
                             <Carousel :value="charts" :numVisible="1" circular>
                                 <template #item="chartSlot">
                                     <div class="flex items-center justify-center flex-col">
-                                        <h2>{{chartSlot.data.title}}</h2>
+                                        <h2>{{ chartSlot.data.title }}</h2>
                                         <Graph :chartData="chartSlot.data" />
                                     </div>
                                 </template>

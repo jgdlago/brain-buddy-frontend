@@ -43,13 +43,13 @@ const handleGetPlayers = async (row) => {
             charts: [
                 createChart({
                     labels: ['Fase 1', 'Fase 2', 'Fase 3'],
-                    label: 'Desempenho',
+                    label: 'Aprendizado',
                     data: [540, 325, 702],
                     type: 'bar'
                 }),
                 createChart({
                     labels: ['Fase 1', 'Fase 2', 'Fase 3'],
-                    label: 'Desempenho',
+                    label: 'Aprendizado',
                     data: [540, 325, 702],
                     type: 'pie'
                 }),
@@ -71,7 +71,7 @@ const filters = ref({
             <!-- Cabeçalho -->
             <div class="text-center mb-4">
                 <h1 class="text-3xl font-bold text-gray-800">Gerenciamento de Jogadores</h1>
-                <p class="text-gray-600 mt-2">Visualize e acompanhe o desempenho dos alunos</p>
+                <p class="text-gray-600 mt-2">Visualize e acompanhe o aprendizado dos alunos</p>
             </div>
 
             <!-- Container principal -->
@@ -128,7 +128,7 @@ const filters = ref({
                         <Column field="gender" header="Gênero" sortable>
                             <template #body="{ data }">
                                 <div class="capitalize text-center text-gray-700">
-                                    {{ data.gender}}
+                                    {{ data.gender }}
                                 </div>
                             </template>
                         </Column>
@@ -168,42 +168,45 @@ const filters = ref({
                             <div class="p-4 bg-gray-50 rounded-lg">
                                 <div class="grid grid-cols-2 md:grid-cols-2 gap-4">
                                     <div v-if="data.progresses.length !== 0" class="space-y-2">
-                                        <h3 class="text-center">Estatísticas gerais</h3>
+                                        <h3 class="text-left">Estatísticas gerais</h3>
                                         <p class="text-gray-600">
-                                        <span class="font-semibold text-gray-700">Total de acertos: </span>
-                                        {{ data.progresses[data.progresses.length - 1].total_correct }}
+                                            <span class="font-semibold text-gray-700">Total de acertos: </span>
+                                            {{ data.progresses[data.progresses.length - 1].total_correct }}
                                         </p>
                                         <p class="text-gray-600">
-                                        <span class="font-semibold text-gray-700">Total de erros: </span>
-                                        {{ data.progresses[data.progresses.length - 1].total_wrong }}
+                                            <span class="font-semibold text-gray-700">Total de erros: </span>
+                                            {{ data.progresses[data.progresses.length - 1].total_wrong }}
                                         </p>
                                         <p class="text-gray-600">
-                                        <span class="font-semibold text-gray-700">Total de tentativas: </span>
-                                        {{ data.progresses[data.progresses.length - 1].total_attempts }}
+                                            <span class="font-semibold text-gray-700">Total de tentativas: </span>
+                                            {{ data.progresses[data.progresses.length - 1].total_attempts }}
                                         </p>
                                         <p class="text-gray-600">
-                                        <span class="font-semibold text-gray-700">Último progresso salvo: </span>
-                                        {{ formatDateTime(data.progresses[data.progresses.length - 1].completion_date) }}
+                                            <span class="font-semibold text-gray-700">Último progresso salvo: </span>
+                                            {{ formatDateTime(data.progresses[data.progresses.length -
+                                                1].completion_date) }}
                                         </p>
                                     </div>
                                     <div v-else class="text-center">
-                                        <h4>Nenhum progresso registrado</h4>   
+                                        <h4>Nenhum progresso registrado</h4>
                                     </div>
 
                                     <div v-if="data.help_flags.length !== 0" class="space-y-2">
-                                        <h3 class="text-center">Pedidos de ajuda</h3>
+                                        <h3 class="text-left">Pedidos de ajuda</h3>
                                         <div v-for="flag in data.help_flags" :key="flag.trigger_date">
-                                        <p class="text-gray-600">
-                                            <span class="font-semibold text-gray-700">{{ formatDateTime(flag.trigger_date) }}:</span>
-                                            Nível {{ flag.level_id }}
-                                        </p>
+                                            <p class="text-gray-600">
+                                                <span class="font-semibold text-gray-700">{{
+                                                    formatDateTime(flag.trigger_date) }}:</span>
+                                                Nível {{ flag.level_id }}
+                                            </p>
                                         </div>
                                     </div>
-                                    <div v-else class="text-center">
-                                        <h4>Nenhum pedido de ajuda registrado</h4>   
+                                    <div v-else>
+                                        <h3 class="text-left">Pedidos de ajuda</h3>
+                                        <h4>Nenhum pedido de ajuda registrado</h4>
                                     </div>
                                 </div>
- 
+
 
                                 <!-- <div class="bg-white p-4 rounded-lg border border-gray-200">
                                     <Carousel :value="data.charts" :numVisible="1" :numScroll="1" circular>
@@ -212,16 +215,16 @@ const filters = ref({
                                                 <Graph :chartData="chartSlot.data" />
                                             </div>
                                         </template>
-                                        <template #previousicon>
+        <template #previousicon>
                                             <Button icon="pi pi-chevron-left"
                                                 class="p-button-rounded p-button-text absolute left-2" />
                                         </template>
-                                        <template #nexticon>
+        <template #nexticon>
                                             <Button icon="pi pi-chevron-right"
                                                 class="p-button-rounded p-button-text absolute right-2" />
                                         </template>
-                                    </Carousel>
-                                </div> -->
+        </Carousel>
+</div> -->
                             </div>
                         </template>
 
