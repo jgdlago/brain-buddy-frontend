@@ -1,15 +1,16 @@
 <script setup>
-import { Button, Carousel, Select, Slider, Toast, Toolbar, useToast } from 'primevue';
+import { Button, Carousel, Slider, Toast, Toolbar, useToast } from 'primevue';
 import { createChart } from '../utils/graphUtils';
 import Graph from '../components/Graph.vue';
 import { onMounted, ref, toRaw, watch } from 'vue';
-import { getPlayers, listPlayers } from '../services/PlayerService';
+import { listPlayers } from '../services/PlayerService';
 import FilterSelect from '../components/FilterSelect.vue';
 import { listActivityArea } from '../services/ActivityAreaService';
-import { getGroups, groupReport, listGroups } from '../services/GroupService';
+import { listGroups } from '../services/GroupService';
 import { useUserStore } from '../stores/userStore';
 import { characters, educationLevel, genders } from '../utils/objUtils';
 import { toastError } from '../utils/utils';
+import { report, reportExcel } from '../services/ReportService';
 
 const charts = ref([])
     // createChart({ //barras por player
@@ -85,7 +86,7 @@ const handleGetGraph = async () => {
     }
 
     try {
-        const graphData = await groupReport(params);
+        const graphData = await report(params);
 
         charts.value.push({
             title: 'Barras por jogador',
@@ -162,6 +163,25 @@ const handleGetGraph = async () => {
         });
     } catch (error) {
         toastError(toast, error.response?.data?.message || 'Erro ao carregar gráficos de desempenho');
+    }
+}
+
+const handleDownload = async () => {
+    const params = {
+        activity_area: rawArray(selectedActivityAreas.value),
+        age_min: selectedAges.value[0],
+        age_max: selectedAges.value[1],
+        character: selectedCharacters.value?.key,
+        education_level: selectedEducationLevel.value?.key,
+        gender: selectedGenders.value?.key,
+        group: rawArray(selectedGroup.value),
+        player: rawArray(selectedPlayers.value),
+    } 
+
+    try {
+        await reportExcel(params);
+    } catch (error) {
+        toastError(toast, error.response?.data?.message || 'Erro ao exportar gráficos de desempenho');
     }
 }
 
@@ -267,8 +287,7 @@ const handleGetGraph = async () => {
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-lg font-semibold">Desempenho dos Alunos</h3>
                             <div class="flex gap-2">
-                                <Button icon="pi pi-download" class="p-button-text p-button-sm" />
-                                <Button icon="pi pi-refresh" class="p-button-text p-button-sm" />
+                                <Button icon="pi pi-download" class="p-button-text p-button-sm" @click="handleDownload"/>
                             </div>
                         </div>
 
@@ -280,14 +299,6 @@ const handleGetGraph = async () => {
                                         <Graph :chartData="chartSlot.data" />
                                     </div>
                                 </template>
-                                <!-- <template #previousicon>
-                                    <Button icon="pi pi-chevron-left"
-                                        class="p-button-rounded p-button-text absolute left-2 p-primary" />
-                                </template>
-                                <template #nexticon>
-                                    <Button icon="pi pi-chevron-right"
-                                        class="p-button-rounded p-button-text absolute right-2" />
-                                </template> -->
                             </Carousel>
                         </div>
                     </div>

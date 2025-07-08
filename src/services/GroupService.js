@@ -9,10 +9,3 @@ export const listGroups = async (userId) => {
   const response = await Axios.get(`/list/group?responsible_user_id=${userId}`);
   return response.data;
 };
-
-export const groupReport = async (axiosParams) => {
-  const response = await Axios.get(`/player-progress/report`, {
-    params: axiosParams,
-  });
-  return response.data;
-};
