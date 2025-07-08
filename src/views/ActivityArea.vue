@@ -82,7 +82,7 @@ const handleDelete = async (row, close) => {
             <div class="overflow-hidden">
                 <Toast position="top-right" />
 
-                <Form title="Áreas de atividade" :columns="columns" :data="data" :object="object"
+                <Form :columns="columns" :data="data" :object="object"
                     :handleDelete="handleDelete" :loading="loading">
                     <template #addContent="{ form, edit, close }">
                         <form @submit.prevent="submitForm(form, edit, close)" class="p-6 gap-5">
