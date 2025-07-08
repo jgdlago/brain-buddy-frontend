@@ -142,7 +142,7 @@ const filters = ref({
                             </template>
                         </Column>
 
-                        <Column field="performance_flag" header="Nível" sortable sortField="performance_index">
+                        <Column field="performance_flag" header="Aprendizado" sortable sortField="performance_index">
 
                             <template #body="{ data }">
                                 <div class="flex justify-center">
@@ -197,7 +197,7 @@ const filters = ref({
                                             <p class="text-gray-600">
                                                 <span class="font-semibold text-gray-700">{{
                                                     formatDateTime(flag.trigger_date) }}:</span>
-                                                Nível {{ flag.level_id }}
+                                                Aprendizado {{ flag.level_id }}
                                             </p>
                                         </div>
                                     </div>
