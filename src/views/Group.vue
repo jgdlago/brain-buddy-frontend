@@ -6,40 +6,13 @@ import { onMounted, ref, toRaw, watch } from 'vue';
 import { listPlayers } from '../services/PlayerService';
 import FilterSelect from '../components/FilterSelect.vue';
 import { listActivityArea } from '../services/ActivityAreaService';
-import { listGroups } from '../services/GroupService';
+import { listGroups, listEducationLevel } from '../services/GroupService';
 import { useUserStore } from '../stores/userStore';
-import { characters, educationLevel, genders } from '../utils/objUtils';
+import { characters, genders } from '../utils/objUtils';
 import { toastError } from '../utils/utils';
 import { report, reportExcel } from '../services/ReportService';
 
 const charts = ref([])
-// createChart({ //barras por player
-//     labels: ['Tentativas', 'Acertos', 'Erros', 'Completos', 'Pedidos de ajuda'],
-//     datasets: [
-//         {
-//             label: 'Maria',
-//             data: [12, 10, 2, 1, 0]
-//         },
-//         {
-//             label: 'João',
-//             data: [15, 9, 6, 1, 2]
-//         },
-//         {
-//             label: 'Maria',
-//             data: [12, 10, 2, 1, 0]
-//         },
-//         {
-//             label: 'João',
-//             data: [10, 6, 4, 3, 1]
-//         },
-//         {
-//             label: 'Ana',
-//             data: [14, 11, 3, 2, 0]
-//         },
-//     ],
-//     type: 'bar',
-//     stacked: true
-// }),
 
 const selectedGroup = ref(null);
 const selectedPlayers = ref([]);
@@ -52,6 +25,7 @@ const selectedCharacters = ref(null);
 const players = ref([]);
 const groups = ref([]);
 const activityAreas = ref([]);
+const educationLevel = ref([])
 
 const generated = ref(false);
 
@@ -61,6 +35,7 @@ const toast = useToast();
 onMounted(async () => {
     players.value = await listPlayers(selectedGroup);
     activityAreas.value = await listActivityArea();
+    educationLevel.value = await listEducationLevel();
     groups.value = await listGroups(userStore.id);
 })
 
@@ -208,11 +183,6 @@ const handleDownload = async () => {
                         </div>
                     </template>
                     <template #end>
-                        <!-- <div class="flex items-center gap-2">
-                            <span class="text-gray-600 hidden sm:inline">Grupo:</span>
-                            <Select :options="groups" v-model="selectedGroup" optionLabel="name" placeholder="Selecione"
-                                class="min-w-[200px]" @change="handleGetGraph" />
-                        </div> -->
                     </template>
                 </Toolbar>
 
@@ -234,15 +204,13 @@ const handleDownload = async () => {
                                 placeholder="Seleciona as turmas" class="w-full" />
                         </div>
 
-                        <!-- Filtro Idade -->
-
-
                         <!-- Filtro Gênero -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Gênero</label>
                             <FilterSelect v-model="selectedGenders" :options="genders" placeholder="Todos" single
                                 class="w-full" />
                         </div>
+                        <!-- Filtro Idade -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Idade</label>
                             <div class="px-2">
