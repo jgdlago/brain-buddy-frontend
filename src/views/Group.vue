@@ -63,51 +63,12 @@ const handleGetGraph = async () => {
     try {
         const graphData = await report(params);
 
-        charts.value.push({
-            title: 'Barras por jogador',
-            ...createChart({
-                labels: ['Tentativas', 'Acertos', 'Erros', 'Completos', 'Pedidos de ajuda'],
-                datasets:
-                    graphData.players.map(item => {
-                        return {
-                            label: item.name,
-                            data: [
-                                item.totals.attempts,
-                                item.totals.correct,
-                                item.totals.wrong,
-                                item.totals.completed,
-                                item.totals.help_flags
-                            ]
-                        }
-                    }),
+        charts.value.push(
+            createChart({
                 type: 'bar',
-                stacked: true
-            }),
-        });
-        charts.value.push({
-            title: 'Radar geral',
-            ...createChart({ //radar geral
+                title: 'Tentativas por Jogador',
                 labels: ['Tentativas', 'Acertos', 'Erros', 'Completos', 'Pedidos de ajuda'],
-                datasets: [
-                    {
-                        label: 'Geral',
-                        data: [
-                            graphData.totals.total_attempts,
-                            graphData.totals.total_correct,
-                            graphData.totals.total_wrong,
-                            graphData.totals.total_completed,
-                            graphData.totals.total_help_flags
-                        ]
-                    },
-                ],
-                type: 'radar'
-            }),
-        });
-        charts.value.push({
-            title: 'Radar individual',
-            ...createChart({
-                labels: ['Tentativas', 'Acertos', 'Erros', 'Completos', 'Pedidos de ajuda'],
-                datasets:
+                datasets: 
                     graphData.players.map(item => {
                         return {
                             label: item.name,
@@ -116,26 +77,13 @@ const handleGetGraph = async () => {
                                 item.totals.correct,
                                 item.totals.wrong,
                                 item.totals.completed,
-                                item.totals.help_flags
-                            ]
+                                item.totals.help_flags   
+                            ] 
                         }
                     }),
-                type: 'radar'
-            }),
-        });
-        charts.value.push({
-            title: 'Pizza',
-            ...createChart({
-                title: 'Pizza',
-                labels: ['Acertos', 'Erros'],
-                label: 'Aprendizado',
-                data: [
-                    graphData.totals.total_correct,
-                    graphData.totals.total_wrong
-                ],
-                type: 'pie'
-            }),
-        });
+                stacked: true,
+            })
+        )
     } catch (error) {
         toastError(toast, error.response?.data?.message || 'Erro ao carregar gráficos de aprendizado');
     }

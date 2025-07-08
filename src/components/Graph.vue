@@ -1,5 +1,6 @@
 <script setup>
 import Chart from "primevue/chart";
+import VueApexCharts from "vue3-apexcharts";
 
 const props = defineProps({
     chartData: Object,
@@ -8,7 +9,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <Chart :type="props.chartData.type" :data="props.chartData.data" :options="props.chartData.option" />
+    <VueApexCharts width="500" :type="props.chartData.type" :options="props.chartData.options" :series="props.chartData.series"/>
 </template>
 
 <style scoped>
