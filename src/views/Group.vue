@@ -163,7 +163,7 @@ const handleDownload = async () => {
 </script>
 
 <template>
-    <div class="min-h-screen bg-gray-50 py-2 px-4">
+    <div class="min-h-full bg-gray-50 py-2 px-4">
         <Toast position="top-right" />
         <div class="max-w-7xl mx-auto">
             <!-- Cabeçalho -->
