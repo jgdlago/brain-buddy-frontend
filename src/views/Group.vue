@@ -1,5 +1,5 @@
 <script setup>
-import { Button, Carousel, Select, Slider, Toolbar } from 'primevue';
+import { Button, Carousel, Select, Slider, Toast, Toolbar, useToast } from 'primevue';
 import { createChart } from '../utils/graphUtils';
 import Graph from '../components/Graph.vue';
 import { onMounted, ref, toRaw, watch } from 'vue';
@@ -9,6 +9,7 @@ import { listActivityArea } from '../services/ActivityAreaService';
 import { getGroups, groupReport, listGroups } from '../services/GroupService';
 import { useUserStore } from '../stores/userStore';
 import { characters, educationLevel, genders } from '../utils/objUtils';
+import { toastError } from '../utils/utils';
 
 //TODO ver como implementar o filtro, rever opções, adicionar "TODOS" como uma opção do multiselect, rever como fazer o filtro da idade
 
@@ -42,6 +43,7 @@ const activityAreas = ref([]);
 const generated = ref(false);
 
 const userStore = useUserStore();
+const toast = useToast();
 
 onMounted(async () => {
     players.value = await listPlayers(selectedGroup);
@@ -70,15 +72,18 @@ const handleGetGraph = async () => {
         player: rawArray(selectedPlayers.value),
     }
 
-    console.log(params);
-
-    await groupReport(params);
+    try {
+        await groupReport(params);
+    } catch (error) {
+        toastError(toast, error.response?.data?.message || 'Erro ao carregar gráficos de desempenho');
+    }
 }
 
 </script>
 
 <template>
     <div class="min-h-screen bg-gray-50 py-2 px-4">
+        <Toast position="top-right" />
         <div class="max-w-7xl mx-auto">
             <!-- Cabeçalho -->
             <div class="text-center mb-4">

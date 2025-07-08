@@ -10,20 +10,22 @@ const props = defineProps({
 
 const data = ref([]);
 
+const resolveId = item => item?.key ?? item?.id ?? null;
+
 onMounted(async () => {
     data.value = await props.getData();
-})
+});
 
 const emit = defineEmits(['update:modelValue']);
 
 const model = computed({
-    get() {
-        if (props.modelValue) {
-            return props.modelValue.key ?? props.modelValue.id ?? null;
-        }
-        return null;
-    },
-    set: val => emit('update:modelValue', val)
+  get() {
+    return resolveId(props.modelValue);
+  },
+  set(val) {
+    const selected = data.value.find(item => item.key === val);
+    emit('update:modelValue', selected ?? null);
+  }
 });
 
 </script>
@@ -31,6 +33,3 @@ const model = computed({
 <template>
     <Select v-model="model" :options="data" optionLabel="label" optionValue="key" :placeholder="placeholder" emptyMessage="Nenhum item encontrado"/>
 </template>
-
-<style scoped>
-</style>

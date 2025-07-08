@@ -38,7 +38,14 @@
     }
 
     const handleEdit = (row) => {
-        obj.value = { ...row };
+        const normalize = (item) => item ? { ...item, key: item.key ?? item.id } : null;
+
+        obj.value = {
+            ...row,
+            activity_area: normalize(row.activity_area),
+            owner_user: normalize(row.owner_user)
+        };
+        
         edit.value = true;
         modalVisible.value = true;
     }

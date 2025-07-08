@@ -13,7 +13,7 @@ export const listGroups = async (userId) => {
 };
 
 export const groupReport = async (axiosParams) => {
-  const response = await Axios.get(`/group/report`, {
+  const response = await Axios.get(`/player/report`, {
     params: axiosParams,
   });
   return response.data.data;

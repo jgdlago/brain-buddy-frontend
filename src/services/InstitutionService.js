@@ -9,8 +9,8 @@ export const addInstitution = async (body) => {
   const response = await Axios.post(`/institution`, {
     name: body.name,
     cnpj: body.cnpj,
-    activity_area_id: body.activity_area,
-    owner_user_id: body.owner_user,
+    activity_area_id: body.activity_area.key,
+    owner_user_id: body.owner_user.key,
   });
   return response.data.data;
 };
@@ -19,8 +19,8 @@ export const updateInstitution = async (body) => {
   const response = await Axios.put(`/institution/${body.id}`, {
     name: body.name,
     cnpj: body.cnpj,
-    activity_area_id: body.activity_area.id,
-    owner_user_id: body.owner_user.id,
+    activity_area_id: body.activity_area.key,
+    owner_user_id: body.owner_user.key,
   });
   return response.data.data;
 };
