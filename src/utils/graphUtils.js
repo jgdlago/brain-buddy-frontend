@@ -12,7 +12,14 @@ const graphColor4 = "rgb(75, 192, 192)";
 const graphColor5 = "rgb(153, 102, 255)";
 const graphColor6 = "rgb(255, 159, 64)";
 
-export const createChart = ({ type, labels, label, data }) => {
+export const createChart = ({
+  type,
+  labels,
+  label,
+  data,
+  datasets,
+  stacked,
+}) => {
   const baseChart = {
     type,
     data: {
@@ -21,22 +28,6 @@ export const createChart = ({ type, labels, label, data }) => {
         {
           label,
           data,
-          backgroundColor: [
-            graphOutline1,
-            graphOutline2,
-            graphOutline3,
-            graphOutline4,
-            graphOutline5,
-            graphOutline6,
-          ],
-          borderColor: [
-            graphColor1,
-            graphColor2,
-            graphColor3,
-            graphColor4,
-            graphColor5,
-            graphColor6,
-          ],
           borderWidth: 1,
         },
       ],
@@ -44,7 +35,29 @@ export const createChart = ({ type, labels, label, data }) => {
     options: {},
   };
 
-  if (type === "bar") {
+  if (datasets) {
+    baseChart.data.datasets = [];
+    datasets.forEach((ds) => {
+      baseChart.data.datasets.push({
+        label: ds.label,
+        data: ds.data,
+      });
+    });
+  }
+
+  if (stacked) {
+    baseChart.options = {
+      scales: {
+        x: {
+          stacked: true,
+        },
+        y: {
+          beginAtZero: true,
+          stacked: true,
+        },
+      },
+    };
+  } else if (type === "bar") {
     baseChart.options = {
       scales: {
         y: {
@@ -56,6 +69,8 @@ export const createChart = ({ type, labels, label, data }) => {
 
   if (type === "pie") {
     baseChart.options = {
+      maintainAspectRatio: false,
+      aspectRatio: 0.5,
       plugins: {
         legend: {
           position: "top",
@@ -63,6 +78,8 @@ export const createChart = ({ type, labels, label, data }) => {
       },
     };
   }
+
+  console.log(baseChart);
 
   return baseChart;
 };

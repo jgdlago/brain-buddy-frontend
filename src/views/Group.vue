@@ -11,22 +11,34 @@ import { useUserStore } from '../stores/userStore';
 import { characters, educationLevel, genders } from '../utils/objUtils';
 import { toastError } from '../utils/utils';
 
-//TODO ver como implementar o filtro, rever opções, adicionar "TODOS" como uma opção do multiselect, rever como fazer o filtro da idade
-
-const charts = [
-    createChart({
-        labels: ['Fase 1', 'Fase 2', 'Fase 3'],
-        label: 'Desempenho',
-        data: [540, 325, 702],
-        type: 'bar'
-    }),
-    createChart({
-        labels: ['Fase 1', 'Fase 2', 'Fase 3'],
-        label: 'Desempenho',
-        data: [540, 325, 702],
-        type: 'pie'
-    }),
-]
+const charts = ref([])
+    // createChart({ //barras por player
+    //     labels: ['Tentativas', 'Acertos', 'Erros', 'Completos', 'Pedidos de ajuda'],
+    //     datasets: [
+    //         {
+    //             label: 'Maria',
+    //             data: [12, 10, 2, 1, 0]
+    //         },
+    //         {
+    //             label: 'João',
+    //             data: [15, 9, 6, 1, 2]
+    //         },
+    //         {
+    //             label: 'Maria',
+    //             data: [12, 10, 2, 1, 0]
+    //         },
+    //         {
+    //             label: 'João',
+    //             data: [10, 6, 4, 3, 1]
+    //         },
+    //         {
+    //             label: 'Ana',
+    //             data: [14, 11, 3, 2, 0]
+    //         },
+    //     ],
+    //     type: 'bar',
+    //     stacked: true
+    // }),
 
 const selectedGroup = ref(null);
 const selectedPlayers = ref([]);
@@ -73,7 +85,81 @@ const handleGetGraph = async () => {
     }
 
     try {
-        await groupReport(params);
+        const graphData = await groupReport(params);
+
+        charts.value.push({
+            title: 'Barras por jogador',
+            ...createChart({ 
+                labels: ['Tentativas', 'Acertos', 'Erros', 'Completos', 'Pedidos de ajuda'],
+                datasets: 
+                    graphData.players.map(item => {
+                        return {
+                            label: item.name,
+                            data: [
+                                item.totals.attempts,
+                                item.totals.correct,
+                                item.totals.wrong,
+                                item.totals.completed,
+                                item.totals.help_flags   
+                            ] 
+                        }
+                    }),
+                type: 'bar',
+                stacked: true
+            }),
+        });
+        charts.value.push({
+            title: 'Radar geral',
+            ...createChart({ //radar geral
+                labels: ['Tentativas', 'Acertos', 'Erros', 'Completos', 'Pedidos de ajuda'],
+                datasets: [
+                    {
+                        label: 'Geral',
+                        data: [
+                            graphData.totals.total_attempts,
+                            graphData.totals.total_correct,
+                            graphData.totals.total_wrong,
+                            graphData.totals.total_completed,
+                            graphData.totals.total_help_flags
+                        ]
+                    },
+                ],
+                type: 'radar'
+            }),
+        });
+        charts.value.push({
+            title: 'Radar individual',
+            ...createChart({ 
+                labels: ['Tentativas', 'Acertos', 'Erros', 'Completos', 'Pedidos de ajuda'],
+                datasets: 
+                    graphData.players.map(item => {
+                        return {
+                            label: item.name,
+                            data: [
+                                item.totals.attempts,
+                                item.totals.correct,
+                                item.totals.wrong,
+                                item.totals.completed,
+                                item.totals.help_flags   
+                            ] 
+                        }
+                    }),
+                type: 'radar'
+            }),
+        });
+        charts.value.push({
+            title: 'Pizza',
+            ...createChart({
+                title: 'Pizza',
+                labels: ['Acertos', 'Erros'],
+                label: 'Desempenho',
+                data: [
+                    graphData.totals.total_correct,
+                    graphData.totals.total_wrong
+                ],
+                type: 'pie'
+            }),
+        });
     } catch (error) {
         toastError(toast, error.response?.data?.message || 'Erro ao carregar gráficos de desempenho');
     }
@@ -187,9 +273,10 @@ const handleGetGraph = async () => {
                         </div>
 
                         <div class="bg-white border border-gray-200 rounded-lg p-4 flex justify-center">
-                            <Carousel :value="charts" :numVisible="1" :numScroll="1" circular>
+                            <Carousel :value="charts" :numVisible="1" circular>
                                 <template #item="chartSlot">
-                                    <div class="flex items-center justify-center">
+                                    <div class="flex items-center justify-center flex-col">
+                                        <h2>{{chartSlot.data.title}}</h2>
                                         <Graph :chartData="chartSlot.data" />
                                     </div>
                                 </template>
