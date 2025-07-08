@@ -12,6 +12,7 @@ import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import router from "./router";
 import { ToastService, Tooltip } from "primevue";
 import locale from "./locale";
+import VueApexCharts from "vue3-apexcharts";
 
 const app = createApp(App);
 
@@ -33,6 +34,7 @@ pinia.use(piniaPluginPersistedstate);
 app.use(pinia);
 app.use(ToastService);
 app.use(router);
+app.use(VueApexCharts);
 app.directive("tooltip", Tooltip);
 
 app.mount("#app");
