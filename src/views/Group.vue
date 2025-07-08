@@ -219,7 +219,7 @@ const handleDownload = async () => {
                 <!-- Filtros -->
                 <div class="p-6">
                     <!-- Primeira linha de filtros -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
                         <!-- Filtro Jogadores -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Jogadores</label>
@@ -254,7 +254,7 @@ const handleDownload = async () => {
                     </div>
 
                     <!-- Segunda linha de filtros -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
                         <!-- Filtro Ano Escolar -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Ano Escolar</label>
@@ -275,11 +275,11 @@ const handleDownload = async () => {
                             <FilterSelect v-model="selectedCharacters" :options="characters" placeholder="Selecione" single
                                 class="w-full" />
                         </div>
-                    </div>
 
-                    <!-- Botão de ação -->
-                    <div class="flex justify-center">
-                        <Button label="Aplicar filtros" icon="pi pi-chart-bar" @click="handleGetGraph" class="p-button-raised" />
+                        <!-- Botão de ação -->
+                        <div class="flex justify-center items-end">
+                            <Button label="Aplicar filtros" icon="pi pi-chart-bar" @click="handleGetGraph" class="p-button-raised h-7/10 w-7/10" />
+                        </div>
                     </div>
 
                     <!-- Gráficos -->

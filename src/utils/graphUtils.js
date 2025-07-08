@@ -79,7 +79,5 @@ export const createChart = ({
     };
   }
 
-  console.log(baseChart);
-
   return baseChart;
 };

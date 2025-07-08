@@ -31,13 +31,18 @@ const onTabOpen = async (event) => {
                 <AccordionPanel v-for="group in groups" :key="group.id" :value="group.id" >
                     <AccordionHeader>{{ group.name }}</AccordionHeader>
                     <AccordionContent>
-                        <DataTable :value="players" class="size-full" paginator :rows="15" strippedRows paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" 
-                        currentPageReportTemplate="{first} até {last} de {totalRecords}" removableSort sort showGridlines>
-                            <Column field="name" header="Nome" class="w-4/10" sortable/>
-                            <Column field="grouop.institution.name" header="Instituição" class="w-5/10" sortable/>
-                            <template #empty> Nenhum jogador encontrado. </template> 
-                            <template #loading> Carregando jogadores, por favor aguarde. </template>
-                        </DataTable>
+                        <p>
+                            <span class="font-semibold text-gray-600">Usuário administrador: </span>
+                            {{ group.responsible_user.name }}
+                        </p>
+                        <p>
+                            <span class="font-semibold text-gray-600">Instituição: </span>
+                            {{ group.institution.name }}
+                        </p>
+                        <p>
+                            <span class="font-semibold text-gray-600">Código de acesso: </span>
+                            {{ group.access_code }}
+                        </p>
                     </AccordionContent>
                 </AccordionPanel>
             </Accordion>
