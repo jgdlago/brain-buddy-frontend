@@ -1,5 +1,4 @@
 <script setup>
-import Chart from "primevue/chart";
 import VueApexCharts from "vue3-apexcharts";
 
 const props = defineProps({

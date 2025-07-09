@@ -71,7 +71,7 @@ const toggleNotifications = () => {
             <div class="flex-1 flex justify-end">
                 <div class="ml-auto relative">
                     <button @click="toggleNotifications"
-                        class="p-2 rounded-full bg-indigo-100 text-indigo-600 hover:bg-indigo-200 focus:outline-none transition-colors">
+                        class="p-2 w-[2.5rem] rounded-full bg-indigo-100 text-indigo-600 hover:bg-indigo-200 focus:outline-none transition-colors">
                         <span class="sr-only">Notificações</span>
                         <i class="pi pi-bell text-xl"></i>
                         <span v-if="unreadCount > 0"

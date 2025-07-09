@@ -240,6 +240,11 @@ const handleDownload = async () => {
 
     :deep(.p-slider-handle) {
         border: 2px solid #3b82f6 !important;
+        transition: all 0.2s ease !important;
+    }
+
+    :deep(.p-slider-range) {
+        transition: all 0.2s ease !important;
     }
 }
 </style>

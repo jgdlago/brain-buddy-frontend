@@ -6,7 +6,7 @@
 - [Vite](https://vitejs.dev/)
 - [PrimeVue](https://primevue.org/) – Biblioteca de componentes UI
 - [PrimeIcons](https://primefaces.org/primeicons/) – Ícones integrados ao PrimeVue
-- [Chart.js](https://www.chartjs.org/) – Biblioteca de gráficos integrada ao PrimeVue
+- [Apexcharts](https://apexcharts.com) – Biblioteca para geração de gráficos
 - [Tailwind CSS](https://tailwindcss.com/) – Utilitário para estilização rápida
 - [Pinia](https://pinia.vuejs.org/) – Gerenciador de estado oficial do Vue 3
 - [JWT](https://jwt.io/) – Autenticação baseada em JSON Web Token

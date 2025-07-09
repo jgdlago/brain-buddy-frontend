@@ -1,5 +1,6 @@
 <script setup>
-    import { Button, Column, DataTable, Dialog, IconField, InputIcon, InputText, Popover, Toast, Toolbar } from 'primevue';
+    import { FilterMatchMode } from '@primevue/core';
+import { Button, Column, DataTable, Dialog, IconField, InputIcon, InputText, Popover, Toast, Toolbar } from 'primevue';
     import { ref } from 'vue';
 
     const props = defineProps({
@@ -61,6 +62,10 @@
         });
     }
 
+    const filters = ref({
+        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    });
+
 </script>
 
 <template>
@@ -68,6 +73,15 @@
         <div class="box">
             <Toolbar class="w-full toolbar">
                 <template #start>
+                    <div class="flex items-center gap-4">
+                        <IconField iconPosition="left" class="w-64">
+                            <InputIcon class="flex items-center justify-center pl-3">
+                                <i class="pi pi-search text-gray-400" />
+                            </InputIcon>
+                            <InputText v-model="filters['global'].value" placeholder="Buscar..."
+                                class="pl-10 w-full h-full border border-gray-300 rounded-lg" />
+                        </IconField>
+                    </div>
                 </template>
                 <template #center>
                     <h3>{{props.title}}</h3>
@@ -76,7 +90,7 @@
                     <Button label="Adicionar" class="button" @click="handleAdd"/>
                 </template>
             </Toolbar>
-            <DataTable class="size-full" scrollable scrollHeight="100vh" :value="props.data" showGridlines strippedRows paginator :rows="15" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" 
+            <DataTable v-model:filters="filters" :globalFilterFields="['name']" class="size-full" scrollable scrollHeight="100vh" :value="props.data" showGridlines strippedRows paginator :rows="15" paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink" 
             currentPageReportTemplate="{first} até {last} de {totalRecords}" removableSort>
                 <template #empty> Nenhum dado encontrado. </template> 
                 <template #loading> Carregando dados, por favor aguarde. </template>

@@ -3,5 +3,6 @@ export default {
   weak: "Senha fraca",
   medium: "Senha média",
   strong: "Senha forte",
-  //TODO usar aqui invés dos empty message
+  emptyMessage: "Nenhumm disponível",
+  emptySearchMessage: "Nenhum encontrado",
 };

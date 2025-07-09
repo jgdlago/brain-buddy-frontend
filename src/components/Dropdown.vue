@@ -13,7 +13,8 @@ const data = ref([]);
 const resolveId = item => item?.key ?? item?.id ?? null;
 
 onMounted(async () => {
-    data.value = await props.getData();
+  const result = await props.getData();
+  data.value = Array.isArray(result) ? result : Object.values(result);
 });
 
 const emit = defineEmits(['update:modelValue']);

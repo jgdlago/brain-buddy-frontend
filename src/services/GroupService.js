@@ -12,6 +12,5 @@ export const listGroups = async (userId) => {
 
 export const listEducationLevel = async () => {
   const response = await Axios.get(`/list/education-level`);
-  console.log(response)
   return response.data;
 };
