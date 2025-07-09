@@ -1,5 +1,5 @@
 <script setup>
-import { Button, Slider, Toast, Toolbar, useToast, Accordion, AccordionTab, Tag } from 'primevue';
+import { Button, Slider, Toast, Toolbar, useToast, Accordion, Tag, AccordionPanel, AccordionHeader, AccordionContent } from 'primevue';
 import { createChart } from '../utils/graphUtils';
 import Graph from '../components/Graph.vue';
 import { onMounted, ref, toRaw } from 'vue';
@@ -11,6 +11,7 @@ import { useUserStore } from '../stores/userStore';
 import { characters, genders } from '../utils/objUtils';
 import { toastError } from '../utils/utils';
 import { report, reportExcel } from '../services/ReportService';
+import { listLevel } from '../services/LevelService';
 
 // Dados reativos
 const charts = ref([]);
@@ -41,7 +42,7 @@ onMounted(async () => {
     players.value = await listPlayers(selectedGroup);
     activityAreas.value = await listActivityArea();
     educationLevel.value = await listEducationLevel();
-    levelList.value = await listEducationLevel();
+    levelList.value = await listLevel();
     groups.value = await listGroups(userStore.id);
 });
 
@@ -264,19 +265,19 @@ const handleDownload = async () => {
 
                         <div class="bg-white border border-gray-200 rounded-lg p-4 mb-6">
                             <Accordion :multiple="true" :activeIndex="[0]">
-                                <AccordionTab v-for="(chart, index) in charts" :key="index">
-                                    <template #header>
+                                <AccordionPanel v-for="(chart, index) in charts" :key="index">
+                                    <AccordionHeader>
                                         <div class="flex items-center">
                                             <i class="pi pi-chart-bar mr-2"></i>
                                             <span>{{ chart.options.title.text }}</span>
                                         </div>
-                                    </template>
-                                    <div class="flex justify-center w-full p-4">
-                                        <div class="w-full max-w-4xl">
-                                            <Graph :chartData="chart" class="w-full h-[350px]" />
+                                    </AccordionHeader>
+                                    <AccordionContent>
+                                        <div class="flex justify-center items-center">
+                                            <Graph :chartData="chart"/>
                                         </div>
-                                    </div>
-                                </AccordionTab>
+                                    </AccordionContent>
+                                </AccordionPanel>
                             </Accordion>
                         </div>
 
@@ -289,8 +290,8 @@ const handleDownload = async () => {
 
                             <div class="bg-white border border-gray-200 rounded-lg p-4">
                                 <Accordion :multiple="true">
-                                    <AccordionTab v-for="player in graphData.players" :key="player.id">
-                                        <template #header>
+                                    <AccordionPanel v-for="player in graphData.players" :key="player.id">
+                                        <AccordionHeader>
                                             <div class="flex items-center justify-between w-full">
                                                 <div class="flex items-center">
                                                     <i class="pi pi-user mr-2"></i>
@@ -299,53 +300,54 @@ const handleDownload = async () => {
                                                     </p>
 
                                                 </div>
-                                                <Tag :value="player.performance_flag"
+                                                <Tag :value="player.performance_flag" class="mx-[1rem]"
                                                     :severity="getPerformanceSeverity(player.performance_flag)" />
                                             </div>
-                                        </template>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
-                                            <!-- Gráfico Radar -->
-                                            <div class="flex justify-center items-center">
-                                                <Graph :chartData="createPlayerRadarChart(player)"
-                                                    class="w-full h-[350px]" />
-                                            </div>
-
-                                            <!-- Dados Estatísticos -->
-                                            <div class="space-y-3">
-                                                <div class="p-3 bg-gray-50 rounded-lg">
-                                                    <div class="font-medium">Desempenho Geral</div>
-                                                    <div class="flex items-center mt-2">
-                                                        <span class="text-gray-600 mr-2">Taxa de acerto:</span>
-                                                        <span class="font-semibold">
-                                                            {{ calculateSuccessRate(player.totals.correct,
-                                                                player.totals.wrong) }}%
-                                                        </span>
-                                                    </div>
+                                        </AccordionHeader>
+                                        <AccordionContent>
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+                                                <!-- Gráfico Radar -->
+                                                <div class="flex justify-center items-center">
+                                                    <Graph :chartData="createPlayerRadarChart(player)" />
                                                 </div>
 
-                                                <div class="grid grid-cols-2 gap-3">
+                                                <!-- Dados Estatísticos -->
+                                                <div class="space-y-3">
                                                     <div class="p-3 bg-gray-50 rounded-lg">
-                                                        <div class="text-gray-600">Acertos</div>
-                                                        <div class="text-xl font-bold">{{ player.totals.correct }}</div>
-                                                    </div>
-                                                    <div class="p-3 bg-gray-50 rounded-lg">
-                                                        <div class="text-gray-600">Erros</div>
-                                                        <div class="text-xl font-bold">{{ player.totals.wrong }}</div>
-                                                    </div>
-                                                    <div class="p-3 bg-gray-50 rounded-lg">
-                                                        <div class="text-gray-600">Tentativas</div>
-                                                        <div class="text-xl font-bold">{{ player.totals.attempts }}
+                                                        <div class="font-medium">Desempenho Geral</div>
+                                                        <div class="flex items-center mt-2">
+                                                            <span class="text-gray-600 mr-2">Taxa de acerto:</span>
+                                                            <span class="font-semibold">
+                                                                {{ calculateSuccessRate(player.totals.correct,
+                                                                    player.totals.wrong) }}%
+                                                            </span>
                                                         </div>
                                                     </div>
-                                                    <div class="p-3 bg-gray-50 rounded-lg">
-                                                        <div class="text-gray-600">Níveis completos</div>
-                                                        <div class="text-xl font-bold">{{ player.totals.levels_completed
-                                                            }}</div>
+
+                                                    <div class="grid grid-cols-2 gap-3">
+                                                        <div class="p-3 bg-gray-50 rounded-lg">
+                                                            <div class="text-gray-600">Acertos</div>
+                                                            <div class="text-xl font-bold">{{ player.totals.correct }}</div>
+                                                        </div>
+                                                        <div class="p-3 bg-gray-50 rounded-lg">
+                                                            <div class="text-gray-600">Erros</div>
+                                                            <div class="text-xl font-bold">{{ player.totals.wrong }}</div>
+                                                        </div>
+                                                        <div class="p-3 bg-gray-50 rounded-lg">
+                                                            <div class="text-gray-600">Tentativas</div>
+                                                            <div class="text-xl font-bold">{{ player.totals.attempts }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="p-3 bg-gray-50 rounded-lg">
+                                                            <div class="text-gray-600">Níveis completos</div>
+                                                            <div class="text-xl font-bold">{{ player.totals.levels_completed
+                                                                }}</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </AccordionTab>
+                                        </AccordionContent>
+                                    </AccordionPanel>
                                 </Accordion>
                             </div>
                         </div>

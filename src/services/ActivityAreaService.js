@@ -22,5 +22,5 @@ export const deleteActivityArea = async (id) => {
 
 export const listActivityArea = async () => {
   const response = await Axios.get(`/list/activity-area`);
-  return response.data;
+  return Object.values(response.data);
 };

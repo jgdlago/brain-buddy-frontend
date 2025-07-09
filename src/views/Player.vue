@@ -187,7 +187,8 @@ const filters = ref({
                                                 1].completion_date) }}
                                         </p>
                                     </div>
-                                    <div v-else class="text-center">
+                                    <div v-else class="text-left">
+                                        <h3>Estatísticas gerais</h3>
                                         <h4>Nenhum progresso registrado</h4>
                                     </div>
 
@@ -197,7 +198,7 @@ const filters = ref({
                                             <p class="text-gray-600">
                                                 <span class="font-semibold text-gray-700">{{
                                                     formatDateTime(flag.trigger_date) }}:</span>
-                                                Aprendizado {{ flag.level_id }}
+                                                Nível {{ flag.level_id }}
                                             </p>
                                         </div>
                                     </div>

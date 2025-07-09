@@ -8,7 +8,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <VueApexCharts width="500" :type="props.chartData.type" :options="props.chartData.options" :series="props.chartData.series"/>
+    <VueApexCharts width="500" height="400" :type="props.chartData.type" :options="props.chartData.options" :series="props.chartData.series"/>
 </template>
 
 <style scoped>

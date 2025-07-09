@@ -5,9 +5,8 @@ export const createChart = ({
   title = "",
   stacked = false,
   horizontal = false,
-  height = 350,
   dataLabels = false,
-  stepSize = 20
+  stepSize = 20,
 }) => {
   const series = datasets.map((ds) => ({
     name: ds.label,
@@ -17,7 +16,6 @@ export const createChart = ({
   const options = {
     chart: {
       type,
-      height,
       stacked,
       toolbar: { show: false },
     },
@@ -32,21 +30,21 @@ export const createChart = ({
     plotOptions: {
       bar: {
         borderRadius: 4,
-        borderRadiusApplication: 'end',
+        borderRadiusApplication: "end",
         horizontal,
         dataLabels: {
-          position: 'center',
-        }
-      }
+          position: "center",
+        },
+      },
     },
     dataLabels: {
       enabled: dataLabels,
     },
     xaxis: {
-      categories: labels
+      categories: labels,
     },
     yaxis: {
-      categories: labels
+      categories: labels,
     },
     labels: [],
     legend: {
