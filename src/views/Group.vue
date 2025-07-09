@@ -1,8 +1,8 @@
 <script setup>
-import { Button, Carousel, Slider, Toast, Toolbar, useToast } from 'primevue';
+import { Button, Slider, Toast, Toolbar, useToast, Accordion, AccordionTab, Tag } from 'primevue';
 import { createChart } from '../utils/graphUtils';
 import Graph from '../components/Graph.vue';
-import { onMounted, ref, toRaw, watch } from 'vue';
+import { onMounted, ref, toRaw } from 'vue';
 import { listPlayers } from '../services/PlayerService';
 import FilterSelect from '../components/FilterSelect.vue';
 import { listActivityArea } from '../services/ActivityAreaService';
@@ -12,8 +12,17 @@ import { characters, genders } from '../utils/objUtils';
 import { toastError } from '../utils/utils';
 import { report, reportExcel } from '../services/ReportService';
 
-const charts = ref([])
+// Dados reativos
+const charts = ref([]);
+const graphData = ref(null);
+const players = ref([]);
+const groups = ref([]);
+const activityAreas = ref([]);
+const educationLevel = ref([]);
+const levelList = ref([]);
+const generated = ref(false);
 
+// Filtros
 const selectedGroup = ref(null);
 const selectedPlayers = ref([]);
 const selectedGenders = ref(null);
@@ -21,24 +30,22 @@ const selectedAges = ref([6, 12]);
 const selectedEducationLevel = ref(null);
 const selectedActivityAreas = ref(null);
 const selectedCharacters = ref(null);
+const selectedLevel = ref(null);
 
-const players = ref([]);
-const groups = ref([]);
-const activityAreas = ref([]);
-const educationLevel = ref([])
-
-const generated = ref(false);
-
+// Store e Toast
 const userStore = useUserStore();
 const toast = useToast();
 
+// Carrega dados iniciais
 onMounted(async () => {
     players.value = await listPlayers(selectedGroup);
     activityAreas.value = await listActivityArea();
     educationLevel.value = await listEducationLevel();
+    levelList.value = await listEducationLevel();
     groups.value = await listGroups(userStore.id);
-})
+});
 
+// Helper functions
 const rawArray = (arr) => {
     try {
         return toRaw(arr).map((item) => item.key);
@@ -47,6 +54,43 @@ const rawArray = (arr) => {
     }
 };
 
+const calculateSuccessRate = (correct, wrong) => {
+    const total = correct + wrong;
+    return total > 0 ? Math.round((correct / total) * 100) : 0;
+};
+
+const getPerformanceSeverity = (performanceFlag) => {
+    switch (performanceFlag?.toLowerCase()) {
+        case 'alto': return 'success';
+        case 'médio': return 'warning';
+        case 'baixo': return 'danger';
+        default: return 'info';
+    }
+};
+
+const createPlayerRadarChart = (player) => {
+    const totals = player.totals;
+
+    return createChart({
+        type: 'radar',
+        height: 350,
+        title: `Desempenho de ${player.name}`,
+        labels: ['Acertos', 'Erros', 'Tentativas', 'Níveis Completos', 'Pedidos de Ajuda'],
+        datasets: [{
+            name: player.name,
+            data: [
+                totals.correct,
+                totals.wrong,
+                totals.attempts,
+                totals.levels_completed,
+                totals.help_flags
+            ]
+        }],
+        stepSize: 5
+    });
+};
+
+// Handlers
 const handleGetGraph = async () => {
     generated.value = true;
     const params = {
@@ -55,39 +99,41 @@ const handleGetGraph = async () => {
         age_max: selectedAges.value[1],
         character: selectedCharacters.value?.key,
         education_level: selectedEducationLevel.value?.key,
+        level: selectedLevel.value?.key,
         gender: selectedGenders.value?.key,
         group: rawArray(selectedGroup.value),
         player: rawArray(selectedPlayers.value),
-    }
+    };
 
     try {
-        const graphData = await report(params);
+        graphData.value = await report(params);
+        charts.value = [];
 
+        // Gráfico de dados totais
         charts.value.push(
             createChart({
                 type: 'bar',
-                title: 'Tentativas por Jogador',
-                labels: ['Tentativas', 'Acertos', 'Erros', 'Completos', 'Pedidos de ajuda'],
-                datasets: 
-                    graphData.players.map(item => {
-                        return {
-                            label: item.name,
-                            data: [
-                                item.totals.attempts,
-                                item.totals.correct,
-                                item.totals.wrong,
-                                item.totals.completed,
-                                item.totals.help_flags   
-                            ] 
-                        }
-                    }),
-                stacked: true,
+                height: 350,
+                title: 'Métricas de Aprendizado',
+                labels: ['Tentativas', 'Completos', 'Acertos', 'Erros', 'Pedidos de Ajuda'],
+                datasets: [{
+                    label: 'Total',
+                    data: [
+                        graphData.value.totals.total_attempts,
+                        graphData.value.totals.total_completed,
+                        graphData.value.totals.total_correct,
+                        graphData.value.totals.total_wrong,
+                        graphData.value.totals.total_help_flags
+                    ]
+                }],
+                horizontal: true,
+                dataLabels: true
             })
-        )
+        );
     } catch (error) {
         toastError(toast, error.response?.data?.message || 'Erro ao carregar gráficos de aprendizado');
     }
-}
+};
 
 const handleDownload = async () => {
     const params = {
@@ -96,18 +142,18 @@ const handleDownload = async () => {
         age_max: selectedAges.value[1],
         character: selectedCharacters.value?.key,
         education_level: selectedEducationLevel.value?.key,
+        level: selectedLevel.value?.key,
         gender: selectedGenders.value?.key,
         group: rawArray(selectedGroup.value),
         player: rawArray(selectedPlayers.value),
-    }
+    };
 
     try {
         await reportExcel(params);
     } catch (error) {
         toastError(toast, error.response?.data?.message || 'Erro ao exportar gráficos de aprendizado');
     }
-}
-
+};
 </script>
 
 <template>
@@ -137,7 +183,7 @@ const handleDownload = async () => {
                 <!-- Filtros -->
                 <div class="p-6">
                     <!-- Primeira linha de filtros -->
-                    <div class="grid grid-cols-4 md:grid-cols-3 gap-4 mb-6">
+                    <div class="grid grid-cols-5 gap-4 mb-6">
                         <!-- Filtro Jogadores -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Jogadores</label>
@@ -156,6 +202,11 @@ const handleDownload = async () => {
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Gênero</label>
                             <FilterSelect v-model="selectedGenders" :options="genders" placeholder="Todos" single
+                                class="w-full" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Level</label>
+                            <FilterSelect v-model="selectedLevel" :options="levelList" placeholder="Todos" single
                                 class="w-full" />
                         </div>
                         <!-- Filtro Idade -->
@@ -202,23 +253,101 @@ const handleDownload = async () => {
 
                     <!-- Gráficos -->
                     <div v-if="generated" class="mb-6">
+                        <!-- Seção de Dados Totais -->
                         <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-lg font-semibold">Aprendizado dos Alunos</h3>
+                            <h3 class="text-lg font-semibold">Dados Totais</h3>
                             <div class="flex gap-2">
                                 <Button icon="pi pi-download" class="p-button-text p-button-sm"
                                     @click="handleDownload" />
                             </div>
                         </div>
 
-                        <div class="bg-white border border-gray-200 rounded-lg p-4 flex justify-center">
-                            <Carousel :value="charts" :numVisible="1" circular>
-                                <template #item="chartSlot">
-                                    <div class="flex items-center justify-center flex-col">
-                                        <h2>{{ chartSlot.data.title }}</h2>
-                                        <Graph :chartData="chartSlot.data" />
+                        <div class="bg-white border border-gray-200 rounded-lg p-4 mb-6">
+                            <Accordion :multiple="true" :activeIndex="[0]">
+                                <AccordionTab v-for="(chart, index) in charts" :key="index">
+                                    <template #header>
+                                        <div class="flex items-center">
+                                            <i class="pi pi-chart-bar mr-2"></i>
+                                            <span>{{ chart.options.title.text }}</span>
+                                        </div>
+                                    </template>
+                                    <div class="flex justify-center w-full p-4">
+                                        <div class="w-full max-w-4xl">
+                                            <Graph :chartData="chart" class="w-full h-[350px]" />
+                                        </div>
                                     </div>
-                                </template>
-                            </Carousel>
+                                </AccordionTab>
+                            </Accordion>
+                        </div>
+
+                        <!-- Seção de Dados dos Jogadores -->
+                        <div v-if="graphData?.players?.length > 0">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-semibold">Dados dos Jogadores</h3>
+                                <span class="text-sm text-gray-500">{{ graphData.players.length }} jogadores</span>
+                            </div>
+
+                            <div class="bg-white border border-gray-200 rounded-lg p-4">
+                                <Accordion :multiple="true">
+                                    <AccordionTab v-for="player in graphData.players" :key="player.id">
+                                        <template #header>
+                                            <div class="flex items-center justify-between w-full">
+                                                <div class="flex items-center">
+                                                    <i class="pi pi-user mr-2"></i>
+                                                    <p class="font-medium">{{ player.name }}
+                                                        <span class="text-gray-500 ml-2">{{ player.age }} anos</span>
+                                                    </p>
+
+                                                </div>
+                                                <Tag :value="player.performance_flag"
+                                                    :severity="getPerformanceSeverity(player.performance_flag)" />
+                                            </div>
+                                        </template>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+                                            <!-- Gráfico Radar -->
+                                            <div class="flex justify-center items-center">
+                                                <Graph :chartData="createPlayerRadarChart(player)"
+                                                    class="w-full h-[350px]" />
+                                            </div>
+
+                                            <!-- Dados Estatísticos -->
+                                            <div class="space-y-3">
+                                                <div class="p-3 bg-gray-50 rounded-lg">
+                                                    <div class="font-medium">Desempenho Geral</div>
+                                                    <div class="flex items-center mt-2">
+                                                        <span class="text-gray-600 mr-2">Taxa de acerto:</span>
+                                                        <span class="font-semibold">
+                                                            {{ calculateSuccessRate(player.totals.correct,
+                                                                player.totals.wrong) }}%
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="grid grid-cols-2 gap-3">
+                                                    <div class="p-3 bg-gray-50 rounded-lg">
+                                                        <div class="text-gray-600">Acertos</div>
+                                                        <div class="text-xl font-bold">{{ player.totals.correct }}</div>
+                                                    </div>
+                                                    <div class="p-3 bg-gray-50 rounded-lg">
+                                                        <div class="text-gray-600">Erros</div>
+                                                        <div class="text-xl font-bold">{{ player.totals.wrong }}</div>
+                                                    </div>
+                                                    <div class="p-3 bg-gray-50 rounded-lg">
+                                                        <div class="text-gray-600">Tentativas</div>
+                                                        <div class="text-xl font-bold">{{ player.totals.attempts }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="p-3 bg-gray-50 rounded-lg">
+                                                        <div class="text-gray-600">Níveis completos</div>
+                                                        <div class="text-xl font-bold">{{ player.totals.levels_completed
+                                                            }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </AccordionTab>
+                                </Accordion>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -229,7 +358,6 @@ const handleDownload = async () => {
 
 <style scoped>
 .custom-toolbar {
-
     border: none !important;
 }
 
